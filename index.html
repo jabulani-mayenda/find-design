@@ -169,60 +169,58 @@
       font-size: 1.2rem;
     }
 
-   /* Add to existing CSS or replace your @media block */
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
   body {
-    flex-direction: column;
-    height: auto; /* Let body height expand */
+    flex-direction: row; /* keep sidebar on the left, content on right */
+    height: 100vh; /* full viewport height */
   }
 
   .sidebar {
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-    padding: 0.5rem 0.5rem; /* less padding */
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    width: 180px; /* narrower on mobile but still vertical */
+    height: 100vh; /* full height on phone */
+    padding: 1rem 0.5rem;
+    overflow-y: auto; /* scroll if too tall */
+    flex-direction: column; /* keep vertical */
+    position: fixed; /* fix sidebar to left */
+    top: 0;
+    left: 0;
+    background-color: #000;
+    z-index: 1000;
   }
 
   .sidebar .logo {
-    font-size: 1.4rem; /* smaller logo on mobile */
-    margin-bottom: 0; /* remove bottom margin */
-    padding-left: 1rem; /* some left padding */
-    flex-shrink: 0; /* prevent shrinking */
-    white-space: nowrap; /* keep text on one line */
-    line-height: 40px; /* align vertically in sidebar */
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    padding-left: 0;
+    text-align: center;
   }
 
   .sidebar ul {
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    gap: 0.5rem;
-    padding-left: 0.5rem;
+    flex-direction: column;
+    padding-left: 0;
+    margin: 0;
   }
 
   .sidebar li {
-    margin: 0;
-    flex: none; /* don't stretch */
-    justify-content: center;
-    min-width: 80px; /* fixed min width for touch */
+    margin-bottom: 0.8rem;
   }
 
   .sidebar li a {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
+    gap: 0.7rem;
+    padding: 0.5rem 0.5rem;
   }
 
   .sidebar li span {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
   .main-content {
-    padding: 1rem 0.8rem;
-    flex: 1 0 auto;
+    margin-left: 180px; /* make room for sidebar */
+    padding: 1rem 1rem 2rem;
+    overflow-y: auto;
+    height: 100vh;
   }
 
   .hero {
@@ -231,12 +229,10 @@
 
   .hero h1 {
     font-size: 1.8rem;
-    line-height: 1.2;
   }
 
   .hero p {
     font-size: 1rem;
-    margin-bottom: 1.5rem;
   }
 
   .cta-button {
@@ -250,7 +246,6 @@
 
   .features h2 {
     font-size: 1.4rem;
-    margin-bottom: 1.5rem;
   }
 
   .features-grid {
@@ -259,13 +254,12 @@
   }
 
   .feature-box {
-    flex: none;
     width: 100%;
     padding: 1.5rem;
   }
 
   footer {
-    padding: 0.8rem 1rem;
+    padding: 1rem;
     font-size: 0.9rem;
   }
 
@@ -275,24 +269,6 @@
   }
 }
 
-/* Bonus: Fix sidebar links color and spacing on hover for mobile */
-.sidebar li a:hover span {
-  color: black !important;
-}
-
-.sidebar li a:hover i {
-  color: white !important;
-}
-
-      .main-content {
-        padding-top: 1rem;
-      }
-
-      .features-grid {
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-    
   </style>
 </head>
 <body>
