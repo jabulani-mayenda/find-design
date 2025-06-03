@@ -292,6 +292,156 @@
       background: #b30000;
     }
 
+    /* New Dashboard Styles */
+    .dashboard-content {
+      max-width: 900px;
+    }
+
+    .featured-course {
+      background: #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 10px red;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .featured-course img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .featured-course div {
+      flex: 1;
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .quick-links a {
+      background: red;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .quick-links a:hover {
+      background: #b30000;
+    }
+
+    /* Testimonials Carousel */
+    .testimonials {
+      margin-bottom: 2rem;
+      position: relative;
+      max-width: 600px;
+    }
+
+    .testimonial-card {
+      background: #222;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 8px red;
+      display: none;
+      text-align: center;
+    }
+
+    .testimonial-card.active {
+      display: block;
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card h4 {
+      color: red;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .carousel-controls button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .carousel-controls button:hover {
+      background: #b30000;
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      background: #222;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+      margin-bottom: 2rem;
+    }
+
+    .progress-bar {
+      background: #111;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar div {
+      background: red;
+      height: 100%;
+      width: 60%;
+      transition: width 0.3s;
+    }
+
+    /* Social Media Footer */
+    .social-footer {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .social-footer a {
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .social-footer a:hover {
+      color: red;
+    }
+
+    /* Newsletter Form */
+    .newsletter-form {
+      max-width: 600px;
+      background: #222;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+      margin-top: 2rem;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .sidebar {
@@ -328,6 +478,26 @@
       .course-list {
         grid-template-columns: 1fr;
       }
+
+      .featured-course {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .featured-course img {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .quick-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .quick-links a {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -348,8 +518,56 @@
   <main class="main-content">
     <!-- Dashboard -->
     <section id="dashboard" class="active">
-      <h1>Welcome to Upskill Tech College</h1>
-      <p>Explore courses, apply easily, and stay updated with events!</p>
+      <div class="dashboard-content">
+        <h1>Welcome to Upskill Tech College</h1>
+        <p>Empower your future with cutting-edge tech education. Explore our courses, apply today, and join our vibrant community!</p>
+
+        <!-- Featured Course -->
+        <div class="featured-course">
+          <img src="https://via.placeholder.com/150" alt="Featured Course" />
+          <div>
+            <h3>Full Stack Web Development</h3>
+            <p>Master web development with HTML, CSS, JavaScript, and backend frameworks. Start your coding journey today!</p>
+            <a href="#" data-section="apply" class="quick-link">Apply Now</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+          <a href="#" data-section="courses">Browse Courses</a>
+          <a href="#" data-section="apply">Apply Now</a>
+          <a href="#" data-section="events">View Events</a>
+        </div>
+
+        <!-- Testimonials Carousel -->
+        <div class="testimonials">
+          <div class="testimonial-card active">
+            <p>"Upskill Tech transformed my career. The hands-on courses are amazing!"</p>
+            <h4>John Doe, Web Developer</h4>
+          </div>
+          <div class="testimonial-card">
+            <p>"The instructors are top-notch, and I learned so much about cybersecurity."</p>
+            <h4>Jane Smith, IT Specialist</h4>
+          </div>
+          <div class="testimonial-card">
+            <p>"I landed my dream job thanks to the skills I gained here!"</p>
+            <h4>Mike Brown, Designer</h4>
+          </div>
+          <div class="carousel-controls">
+            <button id="prevTestimonial"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextTestimonial"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+          <h3>Your Learning Progress</h3>
+          <p>Track your course completion (Demo: 60% complete)</p>
+          <div class="progress-bar">
+            <div></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Courses -->
@@ -404,7 +622,23 @@
       <p>Email: info@upskilltech.edu</p>
       <p>Phone: +265 123 456 789</p>
       <p>Address: 123 Tech Road, Lilongwe, Malawi</p>
+      <!-- Newsletter Signup -->
+      <div class="newsletter-form">
+        <h3>Subscribe to Our Newsletter</h3>
+        <form id="newsletterForm">
+          <input type="email" placeholder="Enter your email" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
     </section>
+
+    <!-- Social Media Footer -->
+    <div class="social-footer">
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
   </main>
 
   <!-- Virtual Assistant -->
@@ -414,7 +648,7 @@
 
   <script>
     // Sidebar navigation and toggle
-    const links = document.querySelectorAll('.sidebar a');
+    const links = document.querySelectorAll('.sidebar a, .quick-link');
     const sections = document.querySelectorAll('main section');
     const sidebar = document.getElementById('sidebar');
     const menuToggle = document.getElementById('menuToggle');
@@ -512,6 +746,14 @@
       applyForm.reset();
     });
 
+    // Newsletter Form
+    const newsletterForm = document.getElementById('newsletterForm');
+    newsletterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thankthe email address you provided to our newsletter.');
+      newsletterForm.reset();
+    });
+
     // Virtual Assistant toggle and chat simulation
     const assistant = document.getElementById('assistant');
     let isOpen = false;
@@ -545,7 +787,7 @@
         closeAssistant();
       });
 
-      // Sendbutton and Enter key handler
+      // Send button and Enter key handler
       const chatInput = document.getElementById('chatInput');
       const sendBtn = document.getElementById('sendBtn');
       const chat = assistant.querySelector('.chat');
@@ -588,13 +830,13 @@
         } else if (msg === 'yes') {
           const lastMsg = chat.querySelector('p:last-child strong');
           if (lastMsg && lastMsg.textContent === 'Assistant:') {
-            if (response.includes('Courses')) {
+            if (chat.querySelector('p:last-child').textContent.includes('Courses')) {
               navigateTo('courses');
               response = 'Navigating to Courses...';
-            } else if (response.includes('Apply')) {
+            } else if (chat.querySelector('p:last-child').textContent.includes('Apply')) {
               navigateTo('apply');
               response = 'Navigating to Apply...';
-            } else if (response.includes('Events')) {
+            } else if (chat.querySelector('p:last-child').textContent.includes('Events')) {
               navigateTo('events');
               response = 'Navigating to Events...';
             }
@@ -623,6 +865,34 @@
         sec.classList.toggle('active', sec.id === sectionId);
       });
     }
+
+    // Testimonials Carousel
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    const prevTestimonial = document.getElementById('prevTestimonial');
+    const nextTestimonial = document.getElementById('nextTestimonial');
+    let currentTestimonial = 0;
+
+    function showTestimonial(index) {
+      testimonials.forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+      });
+    }
+
+    prevTestimonial.addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    });
+
+    nextTestimonial.addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    });
+
+    // Auto-rotate testimonials every 5 seconds
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }, 5000);
   </script>
 </body>
 </html>
