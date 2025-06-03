@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hire Labour</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff; /* White background */
+            text-align: center;
+            color: #000000; /* Black text */
+        }
+
+        header {
+            background-color: #000000; /* Black header */
+            color: #ffffff; /* White text */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        main {
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #000000; /* Black text */
+        }
+
+        button {
+            background-color: #ff0000; /* Red button */
+            color: #ffffff; /* White text */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }
+
+        #labor-form {
+            display: none;
+            margin-top: 20px;
+            background-color: #ffffff; /* White card */
+            padding: 20px;
+            border: 1px solid #000000; /* Black border */
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        select, input[type="submit"] {
+            padding: 8px;
+            margin: 10px;
+            border: 1px solid #000000; /* Black border */
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff0000; /* Red button */
+            color: #ffffff; /* White text */
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #cc0000; /* Darker red */
+        }
+
+        #labor-list {
+            display: none;
+            margin-top: 20px;
+            background-color: #ffffff; /* White card */
+            padding: 20px;
+            border: 1px solid #000000; /* Black border */
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .labor-item {
+            border-bottom: 1px solid #000000; /* Black divider */
+            padding: 10px 0;
+            color: #000000; /* Black text */
+        }
+
+        .labor-item:last-child {
+            border-bottom: none;
+        }
+
+        #login-prompt {
+            display: none;
+            color: #ff0000; /* Red prompt */
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hire Labour</h1>
+    </header>
+    <main>
+        <p id="message">Welcome! Click 'Hire Labour' to find workers or toggle login.</p>
+        <button onclick="toggleLogin()">Toggle Login (Simulate)</button>
+        <button onclick="showLaborForm()">Hire Labour</button>
+        <p id="login-prompt">Please log in to hire labour.</p>
+        <form id="labor-form">
+            <h2>Select Labour</h2>
+            <label for="labor-type">Labour Type:</label>
+            <select id="labor-type" name="labor-type">
+                <option value="plumber">Plumber</option>
+                <option value="electrician">Electrician</option>
+                <option value="carpenter">Carpenter</option>
+            </select>
+            <br>
+            <label for="location">Location:</label>
+            <select id="location" name="location">
+                <option value="new-york">New York</option>
+                <option value="london">London</option>
+                <option value="tokyo">Tokyo</option>
+            </select>
+            <br>
+            <input type="submit" value="Find Labour" onclick="findLabour()">
+        </form>
+        <div id="labor-list">
+            <h2>Available Labour</h2>
+            <div id="labor-results"></div>
+        </div>
+    </main>
+    <script>
+        let isLoggedIn = false; // Simulate login state (backend would set this)
+
+        // Mock labor data (replace with backend API later)
+        const laborData = [
+            { type: "plumber", location: "new-york", name: "John Doe - Plumber" },
+            { type: "plumber", location: "london", name: "Jane Smith - Plumber" },
+            { type: "electrician", location: "new-york", name: "Mike Brown - Electrician" },
+            { type: "electrician", location: "tokyo", name: "Sato Yamada - Electrician" },
+            { type: "carpenter", location: "london", name: "Emma Wilson - Carpenter" },
+            { type: "carpenter", location: "tokyo", name: "Hiro Tanaka - Carpenter" }
+        ];
+
+        function toggleLogin() {
+            isLoggedIn = !isLoggedIn;
+            const message = document.getElementById("message");
+            message.textContent = isLoggedIn 
+                ? "You are logged in! Click 'Hire Labour' to find workers." 
+                : "You are logged out. Log in to hire labour.";
+            message.style.color = isLoggedIn ? "#ff0000" : "#000000"; /* Red when logged in, black when logged out */
+            document.getElementById("labor-form").style.display = "none";
+            document.getElementById("labor-list").style.display = "none";
+            document.getElementById("login-prompt").style.display = "none";
+        }
+
+        function showLaborForm() {
+            const laborForm = document.getElementById("labor-form");
+            const laborList = document.getElementById("labor-list");
+            const loginPrompt = document.getElementById("login-prompt");
+            if (isLoggedIn) {
+                laborForm.style.display = "block";
+                laborList.style.display = "none";
+                loginPrompt.style.display = "none";
+            } else {
+                laborForm.style.display = "none";
+                laborList.style.display = "none";
+                loginPrompt.style.display = "block";
+            }
+        }
+
+        function findLabour() {
+            if (!isLoggedIn) return; // Safety check
+            const laborType = document.getElementById("labor-type").value;
+            const location = document.getElementById("location").value;
+            const resultsDiv = document.getElementById("labor-results");
+            const laborList = document.getElementById("labor-list");
+
+            // Filter mock data (backend would query a database)
+            const filteredLabor = laborData.filter(labor => 
+                labor.type === laborType && labor.location === location
+            );
+
+            // Display results
+            resultsDiv.innerHTML = "";
+            if (filteredLabor.length > 0) {
+                filteredLabor.forEach(labor => {
+                    const div = document.createElement("div");
+                    div.className = "labor-item";
+                    div.textContent = labor.name;
+                    resultsDiv.appendChild(div);
+                });
+            } else {
+                const div = document.createElement("div");
+                div.className = "labor-item";
+                div.textContent = "No labour available for this selection.";
+                resultsDiv.appendChild(div);
+            }
+            laborList.style.display = "block";
+
+            // Log for backend integration (e.g., POST request)
+            console.log("Form submitted:", { laborType, location });
+        }
+    </script>
+</body>
+</html>
