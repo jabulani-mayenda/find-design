@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff; /* White background */
+            text-align: center;
+            color: #000000; /* Black text */
+        }
+
+        header {
+            background-color: #000000; /* Black header */
+            color: #ffffff; /* White text */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        main {
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #000000; /* Black text */
+        }
+
+        button {
+            background-color: #ff0000; /* Red button */
+            color: #ffffff; /* White text */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }
+
+        #job-list {
+            display: none;
+            margin-top: 20px;
+            background-color: #ffffff; /* White card */
+            padding: 20px;
+            border: 1px solid #000000; /* Black border */
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-item {
+            border-bottom: 1px solid #000000; /* Black divider */
+            padding: 10px 0;
+            color: #000000; /* Black text */
+        }
+
+        .job-item:last-child {
+            border-bottom: none;
+        }
+
+        #login-prompt {
+            display: none;
+            color: #ff0000; /* Red prompt */
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Job Portal</h1>
+    </header>
+    <main>
+        <p id="message">Welcome! Explore courses or toggle login to view jobs.</p>
+        <button onclick="toggleLogin()">Toggle Login (Simulate)</button>
+        <button onclick="viewCourses()">View Courses</button>
+        <p id="login-prompt">Please log in to view available jobs.</p>
+        <div id="job-list">
+            <h2>Available Jobs</h2>
+            <div class="job-item">Web Developer - Full-time, Remote</div>
+            <div class="job-item">Data Analyst - Part-time, On-site</div>
+            <div class="job-item">UI/UX Designer - Contract, Hybrid</div>
+        </div>
+    </main>
+    <script>
+        let isLoggedIn = false; // Simulate login state (backend would set this)
+
+        function toggleLogin() {
+            isLoggedIn = !isLoggedIn;
+            const message = document.getElementById("message");
+            message.textContent = isLoggedIn 
+                ? "You are logged in! Click 'View Courses' to see jobs." 
+                : "You are logged out. Log in to view jobs.";
+            message.style.color = isLoggedIn ? "#ff0000" : "#000000"; /* Red when logged in, black when logged out */
+            document.getElementById("job-list").style.display = "none";
+            document.getElementById("login-prompt").style.display = "none";
+        }
+
+        function viewCourses() {
+            const jobList = document.getElementById("job-list");
+            const loginPrompt = document.getElementById("login-prompt");
+            if (isLoggedIn) {
+                jobList.style.display = "block";
+                loginPrompt.style.display = "none";
+            } else {
+                jobList.style.display = "none";
+                loginPrompt.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
