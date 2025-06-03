@@ -4,208 +4,292 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Find Nchito Yanga</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Font Awesome for icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-XxqO+JMso+eeOiawuD+EJH49ImDv+oF53meDM6ryKwVZ72SUPDjEsPdOJc/NDQmNyY3tCkhjQdGyBaP6u4brVA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   <style>
+    /* ===================================
+       RESET & GLOBAL STYLES
+    =================================== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    body {
+    html, body {
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      min-height: 100vh;
       background: #f4f4f4;
       color: #333;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    /* Sidebar */
-    nav.sidebar {
+    /* ===================================
+       SIDEBAR (DESKTOP & MOBILE)
+    =================================== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
       width: 240px;
       background-color: #000;
       color: white;
-      display: flex;
-      flex-direction: column;
       padding: 2rem 1rem;
-      flex-shrink: 0;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      overflow-y: auto;
-      border-right: 1px solid #222;
+      transition: transform 0.3s ease;
+      z-index: 1000;
     }
-
-    nav.sidebar .logo {
+    /* Start hidden (off-canvas) on mobile */
+    .sidebar.closed {
+      transform: translateX(-100%);
+    }
+    .sidebar .logo {
       font-size: 1.8rem;
       font-weight: bold;
       color: red;
-      margin-bottom: 2rem;
       text-align: center;
+      margin-bottom: 2rem;
       user-select: none;
     }
-
-    nav.sidebar ul {
+    .sidebar ul {
       list-style: none;
     }
-
-    nav.sidebar li {
-      margin-bottom: 1rem;
-    }
-
-    nav.sidebar li a {
+    .sidebar li {
       display: flex;
       align-items: center;
-      text-decoration: none;
-      color: white;
-      padding: 0.8rem 1rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
       border-radius: 8px;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background 0.3s;
+      cursor: pointer;
     }
-
-    nav.sidebar li a i {
+    .sidebar li i {
       margin-right: 1rem;
       font-size: 1.2rem;
       color: red;
       flex-shrink: 0;
     }
-
-    nav.sidebar li a span {
+    .sidebar li span {
       font-size: 1rem;
-      white-space: nowrap;
+      color: white;
     }
-
-    nav.sidebar li a:hover {
+    .sidebar li:hover {
       background-color: red;
+    }
+    .sidebar li:hover span {
       color: black;
     }
-
-    nav.sidebar li a:hover i {
+    .sidebar li:hover i {
       color: white;
     }
 
-    main.main-content {
-      margin-left: 240px;
-      flex: 1;
+    /* “✕” button inside the sidebar (mobile only) */
+    .sidebar .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.2rem;
+      background: transparent;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: none; /* shown only on mobile */
+    }
+
+    /* ===================================
+       MENU TOGGLE (HAMBURGER – MOBILE ONLY)
+    =================================== */
+    .menu-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 1.5rem;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1100;
+      display: none; /* visible only on mobile */
+      transition: background 0.3s;
+    }
+    .menu-toggle:hover {
+      background: #333;
+    }
+
+    /* ===================================
+       MAIN CONTENT
+    =================================== */
+    .main-content {
+      margin-left: 240px; /* desktop: leave space for sidebar */
+      transition: margin-left 0.3s ease;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
+    /* When sidebar is closed on mobile, main-content becomes full width */
+    .main-content.expanded {
+      margin-left: 0;
+    }
 
+    /* ===================================
+       HERO SECTION
+    =================================== */
     .hero {
-      background: linear-gradient(to right, #000, red);
+      background: linear-gradient(to right, #000, #e30613);
       color: white;
-      padding: 4rem 3rem;
-      min-height: 300px;
+      padding: 4rem 2rem;
+      text-align: center;
     }
-
     .hero h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+      line-height: 1.2;
     }
-
     .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     .cta-button {
-      background: white;
-      color: red;
-      padding: 0.9rem 2rem;
+      background: #fff;
+      color: #e30613;
+      padding: 0.8rem 1.8rem;
       font-weight: bold;
-      text-decoration: none;
       border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       transition: background 0.3s;
     }
-
     .cta-button:hover {
-      background: #eee;
+      background: #f0f0f0;
     }
 
+    /* ===================================
+       FEATURES (CARDS) SECTION
+    =================================== */
     .features {
-      padding: 3rem;
+      padding: 3rem 2rem;
+      background: #f4f4f4;
     }
-
     .features h2 {
       font-size: 2rem;
-      color: red;
+      color: #e30613;
       margin-bottom: 2rem;
+      text-align: center;
     }
-
     .features-grid {
       display: flex;
       gap: 2rem;
       flex-wrap: wrap;
+      justify-content: center;
     }
-
     .feature-box {
-      flex: 1 1 30%;
-      background: white;
-      padding: 2rem;
+      flex: 1 1 300px;
+      background: #fff;
+      padding: 1.5rem;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
       transition: transform 0.3s;
     }
-
     .feature-box:hover {
       transform: translateY(-5px);
     }
-
     .feature-box i {
       font-size: 2.5rem;
-      color: red;
+      color: #e30613;
       margin-bottom: 1rem;
     }
-
     .feature-box h3 {
       margin-bottom: 0.5rem;
-      color: black;
+      color: #000;
+      font-size: 1.2rem;
     }
-
     .feature-box p {
       color: #333;
+      font-size: 0.95rem;
     }
 
-    footer {
-      background: black;
-      color: white;
+    /* ===================================
+       FOOTER
+    =================================== */
+    .footer {
+      background: #000;
+      color: #fff;
       text-align: center;
-      padding: 1rem;
+      padding: 1rem 0.5rem;
       margin-top: auto;
     }
-
-    .social-icons a {
-      color: red;
+    .footer .social-icons a {
+      color: #e30613;
       margin: 0 0.5rem;
       font-size: 1.2rem;
     }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      nav.sidebar {
-        width: 180px;
-        padding: 1.5rem 1rem;
+    /* ===================================
+       RESPONSIVE: MOBILE & TABLET
+    =================================== */
+    @media (max-width: 768px) {
+      /* Show hamburger on mobile */
+      .menu-toggle {
+        display: block;
       }
-
-      main.main-content {
-        margin-left: 180px;
+      /* Sidebar starts closed on mobile */
+      .sidebar {
+        transform: translateX(-100%);
       }
-
+      /* Show “✕” inside sidebar */
+      .sidebar .close-btn {
+        display: block;
+      }
+      /* Main content takes full width by default */
+      .main-content {
+        margin-left: 0;
+      }
+      /* Overlay behind the sidebar */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 900;
+        display: none;
+      }
+      .overlay.visible {
+        display: block;
+      }
+      /* Adjust padding for hero on mobile */
       .hero {
-        padding: 3rem 1.2rem;
+        padding: 3rem 1rem;
       }
-
       .hero h1 {
         font-size: 2rem;
       }
-
+      .hero p {
+        font-size: 1rem;
+      }
       .features {
         padding: 2rem 1rem;
       }
-
+      .features h2 {
+        font-size: 1.8rem;
+      }
       .feature-box {
         flex: 1 1 100%;
       }
@@ -213,55 +297,128 @@
   </style>
 </head>
 <body>
+  <!-- Hamburger / Menu Toggle (visible on mobile) -->
+  <button class="menu-toggle" id="openSidebarBtn">☰</button>
 
-  <nav class="sidebar">
-    <div class="logo">Find Nchito Yanga</div>
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar closed">
+    <!-- Close button inside sidebar (mobile only) -->
+    <button class="close-btn" id="closeSidebarBtn">✕</button>
+
+    <div class="logo">Nchito Yanga</div>
     <ul>
-      <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
-      <li><a href="Opportunities.html"><i class="fas fa-briefcase"></i><span>Opportunities</span></a></li>
-      <li><a href="upskill.html"><i class="fas fa-graduation-cap"></i><span>Upskill</span></a></li>
-      <li><a href="molonji.html"><i class="fas fa-handshake"></i><span>Connect</span></a></li>
-      <li><a href="#"><i class="fas fa-bullhorn"></i><span>Adverts</span></a></li>
+      <li>
+        <a href="index.html">
+          <i class="fas fa-home"></i><span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="opportunities.html">
+          <i class="fas fa-briefcase"></i><span>Opportunities</span>
+        </a>
+      </li>
+      <li>
+        <a href="upskill.html">
+          <i class="fas fa-graduation-cap"></i><span>Upskill</span>
+        </a>
+      </li>
+      <li>
+        <a href="molunji.html">
+          <i class="fas fa-handshake"></i><span>Molunji</span>
+        </a>
+      </li>
+      <li>
+        <a href="login.html">
+          <i class="fas fa-sign-in-alt"></i><span>Login</span>
+        </a>
+      </li>
     </ul>
   </nav>
 
-  <main class="main-content">
+  <!-- Overlay (only visible when sidebar is open on mobile) -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- Main Content -->
+  <div id="mainContent" class="main-content">
+    <!-- Hero Section -->
     <section class="hero">
-      <h1>Empowering Malawi’s Youth</h1>
-      <p>Find Nchito Yanga is your career companion – from student life to success.</p>
-      <a href="#" class="cta-button">Explore Now</a>
+      <h1>Find Your Dream Job in Malawi</h1>
+      <p>Connect with employers, upskill, and grow your career — all in one place.</p>
+      <a href="#" class="cta-button">Get Started</a>
     </section>
 
+    <!-- Features Section (Why Choose Us) -->
     <section class="features">
-      <h2>Why Use Find Nchito Yanga?</h2>
+      <h2>Why Choose Us</h2>
       <div class="features-grid">
         <div class="feature-box">
-          <i class="fas fa-briefcase"></i>
-          <h3>Job Discovery</h3>
-          <p>Find internships, graduate roles, part-time gigs, and full-time jobs tailored for Malawi’s youth.</p>
+          <i class="fas fa-check-circle"></i>
+          <h3>Verified Jobs</h3>
+          <p>Trusted listings from verified companies and recruiters.</p>
         </div>
         <div class="feature-box">
-          <i class="fas fa-laptop-code"></i>
-          <h3>Upskilling</h3>
-          <p>Access short courses, tutorials, and certification programs to boost your skills and employability.</p>
+          <i class="fas fa-certificate"></i>
+          <h3>Skill Building</h3>
+          <p>Take courses, get certified, and become job-ready.</p>
         </div>
         <div class="feature-box">
-          <i class="fas fa-users"></i>
-          <h3>Community & Network</h3>
-          <p>Connect with employers, peers, mentors, and alumni on a social-friendly platform.</p>
+          <i class="fas fa-tools"></i>
+          <h3>Hire Labor</h3>
+          <p>Need a gardener, cleaner, or electrician? Hire directly.</p>
         </div>
       </div>
     </section>
 
-    <footer>
-      <p>&copy; 2025 Find Nchito Yanga. All rights reserved.</p>
+    <!-- Footer Always at Bottom -->
+    <footer class="footer">
+      &copy; 2025 Find Nchito Yanga. All rights reserved.<br />
       <div class="social-icons">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
         <a href="#"><i class="fab fa-linkedin-in"></i></a>
       </div>
     </footer>
-  </main>
+  </div>
 
+  <script>
+    /* =========================
+       SIDEBAR TOGGLE LOGIC
+    ========================= */
+    const sidebar   = document.getElementById('sidebar');
+    const main      = document.getElementById('mainContent');
+    const overlay   = document.getElementById('overlay');
+    const openBtn   = document.getElementById('openSidebarBtn');
+    const closeBtn  = document.getElementById('closeSidebarBtn');
+
+    function openSidebar() {
+      sidebar.classList.remove('closed');
+      overlay.classList.add('visible');
+      main.classList.add('expanded');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add('closed');
+      overlay.classList.remove('visible');
+      main.classList.remove('expanded');
+    }
+
+    openBtn.addEventListener('click', openSidebar);
+    closeBtn.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // On desktop, keep the sidebar open and hide overlay
+    function checkWindowSize() {
+      if (window.innerWidth >= 768) {
+        sidebar.classList.remove('closed');
+        overlay.classList.remove('visible');
+        main.classList.remove('expanded');
+      } else {
+        sidebar.classList.add('closed');
+      }
+    }
+
+    window.addEventListener('resize', checkWindowSize);
+    window.addEventListener('load', checkWindowSize);
+  </script>
 </body>
 </html>
