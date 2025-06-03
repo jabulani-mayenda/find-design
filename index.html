@@ -43,15 +43,15 @@
       left: 0;
       height: 100%;
       width: 240px;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0, 0, 0, 0.95);
       color: white;
       padding: 2rem 1rem;
       transition: transform 0.3s ease;
       z-index: 1000;
-    }
-    /* Start hidden (off-canvas) on mobile */
-    .sidebar.closed {
       transform: translateX(-100%);
+    }
+    .sidebar.open {
+      transform: translateX(0);
     }
     .sidebar .logo {
       font-size: 1.8rem;
@@ -103,7 +103,7 @@
       color: #fff;
       border: none;
       cursor: pointer;
-      display: none; /* shown only on mobile */
+      display: none;
     }
 
     /* ===================================
@@ -121,7 +121,7 @@
       border-radius: 5px;
       cursor: pointer;
       z-index: 1100;
-      display: none; /* visible only on mobile */
+      display: none;
       transition: background 0.3s;
     }
     .menu-toggle:hover {
@@ -132,15 +132,11 @@
        MAIN CONTENT
     =================================== */
     .main-content {
-      margin-left: 240px; /* desktop: leave space for sidebar */
+      margin-left: 240px;
       transition: margin-left 0.3s ease;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-    }
-    /* When sidebar is closed on mobile, main-content becomes full width */
-    .main-content.expanded {
-      margin-left: 0;
     }
 
     /* ===================================
@@ -241,6 +237,23 @@
     }
 
     /* ===================================
+       OVERLAY
+    =================================== */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    .overlay.visible {
+      display: block;
+    }
+
+    /* ===================================
        RESPONSIVE: MOBILE & TABLET
     =================================== */
     @media (max-width: 768px) {
@@ -248,31 +261,20 @@
       .menu-toggle {
         display: block;
       }
-      /* Sidebar starts closed on mobile */
-      .sidebar {
-        transform: translateX(-100%);
-      }
-      /* Show "✕" inside sidebar */
+      /* Show close button inside sidebar */
       .sidebar .close-btn {
         display: block;
       }
-      /* Main content takes full width by default */
+      /* Main content takes full width */
       .main-content {
         margin-left: 0;
       }
-      /* Overlay behind the sidebar */
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.4);
-        z-index: 900;
-        display: none;
+      /* Desktop sidebar behavior */
+      .sidebar {
+        transform: translateX(-100%);
       }
-      .overlay.visible {
-        display: block;
+      .sidebar.open {
+        transform: translateX(0);
       }
       /* Adjust padding for hero on mobile */
       .hero {
@@ -301,7 +303,7 @@
   <button class="menu-toggle" id="openSidebarBtn">☰</button>
 
   <!-- Sidebar -->
-  <nav id="sidebar" class="sidebar closed">
+  <nav id="sidebar" class="sidebar">
     <!-- Close button inside sidebar (mobile only) -->
     <button class="close-btn" id="closeSidebarBtn">✕</button>
 
@@ -384,53 +386,54 @@
     /* =========================
        SIDEBAR TOGGLE LOGIC
     ========================= */
-    const sidebar   = document.getElementById('sidebar');
-    const main      = document.getElementById('mainContent');
-    const overlay   = document.getElementById('overlay');
-    const openBtn   = document.getElementById('openSidebarBtn');
-    const closeBtn  = document.getElementById('closeSidebarBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('openSidebarBtn');
+    const closeBtn = document.getElementById('closeSidebarBtn');
 
     function openSidebar() {
-      sidebar.classList.remove('closed');
+      sidebar.classList.add('open');
       overlay.classList.add('visible');
     }
 
     function closeSidebar() {
-      sidebar.classList.add('closed');
+      sidebar.classList.remove('open');
       overlay.classList.remove('visible');
     }
 
+    // Event listeners
     openBtn.addEventListener('click', openSidebar);
     closeBtn.addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    // On desktop, keep the sidebar open and hide overlay
-    function checkWindowSize() {
-      if (window.innerWidth >= 768) {
-        sidebar.classList.remove('closed');
+    // Handle window resize
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        // Desktop - always show sidebar
+        sidebar.classList.add('open');
         overlay.classList.remove('visible');
       } else {
-        if (!sidebar.classList.contains('closed')) {
-          sidebar.classList.add('closed');
-        }
+        // Mobile - start with sidebar closed
+        sidebar.classList.remove('open');
       }
     }
 
-    // Initialize on load
+    // Initialize
     window.addEventListener('load', function() {
-      checkWindowSize();
-      // Close sidebar if clicked outside on mobile
+      handleResize();
+      
+      // Close sidebar when clicking outside on mobile
       document.addEventListener('click', function(e) {
-        if (window.innerWidth < 768 && 
+        if (window.innerWidth <= 768 && 
             !sidebar.contains(e.target) && 
             e.target !== openBtn && 
-            !sidebar.classList.contains('closed')) {
+            sidebar.classList.contains('open')) {
           closeSidebar();
         }
       });
     });
 
-    window.addEventListener('resize', checkWindowSize);
+    window.addEventListener('resize', handleResize);
   </script>
 </body>
 </html>
