@@ -59,7 +59,7 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 1rem;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
       cursor: pointer;
       font-weight: 600;
     }
@@ -69,6 +69,7 @@
       background-color: red;
       color: #111;
       font-weight: 700;
+      transform: translateX(5px);
     }
 
     /* Toggle Button */
@@ -85,6 +86,11 @@
       font-size: 1.5rem;
       cursor: pointer;
       z-index: 1002;
+      transition: background 0.3s;
+    }
+
+    .menu-toggle:hover {
+      background: #b30000;
     }
 
     /* Backdrop for Mobile Sidebar */
@@ -97,10 +103,12 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
       z-index: 1000;
+      transition: opacity 0.3s;
     }
 
     .backdrop.active {
       display: block;
+      opacity: 1;
     }
 
     /* Main Content */
@@ -110,7 +118,7 @@
       margin-left: 260px;
       overflow-y: auto;
       background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-      transition: margin-left 0.3s ease;
+      transition: margin-left 0.3s;
     }
 
     /* Virtual Assistant */
@@ -168,10 +176,6 @@
       overflow-y: auto;
       margin-bottom: 0.5rem;
       font-size: 0.95rem;
-      max-height: 300px;
-      padding: 0.5rem;
-      background: rgba(0,0,0,0.2);
-      border-radius: 8px;
     }
 
     .assistant .chat p {
@@ -195,7 +199,6 @@
       border: none;
       outline: none;
       font-size: 1rem;
-      background: rgba(255,255,255,0.9);
     }
 
     .assistant button {
@@ -213,25 +216,435 @@
       background: #f5f5f5;
     }
 
+    /* Live Chat Support */
+    .live-chat {
+      position: fixed;
+      bottom: 150px;
+      right: 20px;
+      background: #222;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      box-shadow: 0 0 10px red;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .live-chat:hover {
+      background: red;
+    }
+
     /* Sections */
     section {
       display: none;
-      animation: fadeIn 0.6s ease forwards;
+      animation: slideIn 0.6s ease forwards;
     }
 
     section.active {
       display: block;
     }
 
-    @keyframes fadeIn {
+    @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateX(20px);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
       }
+    }
+
+    /* Course List */
+    .course-search {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      max-width: 600px;
+    }
+
+    .course-search input,
+    .course-search select {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+    }
+
+    .course-card {
+      background: #222;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 8px red;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 15px red;
+    }
+
+    .course-card h4 {
+      margin-bottom: 0.5rem;
+      color: red;
+      font-weight: 700;
+    }
+
+    .course-card p {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    /* Apply Form */
+    form {
+      max-width: 600px;
+      background: #222;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+    }
+
+    form input,
+    form select,
+    form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      background: #111;
+      color: white;
+    }
+
+    form button {
+      padding: 0.8rem 1.5rem;
+      background: red;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background: #b30000;
+    }
+
+    /* Dashboard Styles */
+    .dashboard-content {
+      max-width: 900px;
+    }
+
+    .featured-course {
+      background: #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 10px red;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .featured-course img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .featured-course div {
+      flex: 1;
+    }
+
+    .featured-course h3 {
+      font-weight: 700;
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .quick-links a {
+      background: red;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .quick-links a:hover {
+      background: #b30000;
+      transform: scale(1.05);
+    }
+
+    /* Campus Tour */
+    .campus-tour {
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tour-card {
+      background: #222;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 8px red;
+      transition: transform 0.3s;
+    }
+
+    .tour-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .tour-card h4 {
+      color: red;
+      font-weight: 700;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Faculty Spotlight */
+    .faculty-spotlight {
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .faculty-card {
+      background: #222;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 8px red;
+      transition: transform 0.3s;
+    }
+
+    .faculty-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 0.5rem;
+    }
+
+    .faculty-card h4 {
+      color: red;
+      font-weight: 700;
+    }
+
+    .faculty-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Blog Preview */
+    .blog-preview {
+      background: #222;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+      margin-bottom: 2rem;
+    }
+
+    .blog-preview h3 {
+      font-weight: 700;
+      color: red;
+    }
+
+    /* Testimonials Carousel */
+    .testimonials {
+      margin-bottom: 2rem;
+      position: relative;
+      max-width: 600px;
+    }
+
+    .testimonial-card {
+      background: #222;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 8px red;
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .testimonial-card.active {
+      display: block;
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card h4 {
+      color: red;
+      font-weight: 700;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .carousel-controls button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background 0.3s;
+    }
+
+    .carousel-controls button:hover {
+      background: #b30000;
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      background: #222;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+      margin-bottom: 2rem;
+    }
+
+    .progress-tracker h3 {
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      background: #111;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar div {
+      background: red;
+      height: 100%;
+      width: 60%;
+      transition: width 0.3s;
+    }
+
+    /* Social Media Footer */
+    .social-footer {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .social-footer a {
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    .social-footer a:hover {
+      color: red;
+      transform: scale(1.2);
+    }
+
+    /* Newsletter Form */
+    .newsletter-form {
+      max-width: 600px;
+      background: #222;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+      margin-top: 2rem;
+    }
+
+    .newsletter-form h3 {
+      font-weight: 700;
+    }
+
+    /* Resources Section */
+    .resources-list {
+      max-width: 600px;
+    }
+
+    .resources-list a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .resources-list a:hover {
+      background: red;
+      color: #111;
+      transform: translateX(5px);
+    }
+
+    /* Course Schedule Table */
+    .course-schedule {
+      max-width: 900px;
+      background: #222;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+      margin-bottom: 2rem;
+    }
+
+    .course-schedule table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .course-schedule th,
+    .course-schedule td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    .course-schedule th {
+      color: red;
+      font-weight: 700;
     }
 
     /* Responsive */
@@ -258,7 +671,12 @@
       }
 
       .assistant {
-        bottom: 70px;
+        bottom: 150px;
+        right: 15px;
+      }
+
+      .live-chat {
+        bottom: 80px;
         right: 15px;
       }
 
@@ -267,8 +685,41 @@
         max-width: 320px;
         height: 60vh;
         max-height: 400px;
-        bottom: 80px;
+        bottom: 160px;
         right: 15px;
+      }
+
+      .course-list {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-course {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .featured-course img {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .quick-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .quick-links a {
+        width: 100%;
+        text-align: center;
+      }
+
+      .campus-tour,
+      .faculty-spotlight {
+        grid-template-columns: 1fr;
+      }
+
+      .course-schedule table {
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -282,43 +733,239 @@
   <nav class="sidebar" id="sidebar">
     <h2>Upskill Tech</h2>
     <a href="#" class="active" data-section="dashboard"><i class="fas fa-home"></i> Dashboard</a>
-    <a href="#" data-section="courses"><i class="fas fa-book"></i> Courses</a>
+    <a href="#" data-section="available-courses"><i class="fas fa-graduation-cap"></i> Available Courses</a>
+    <a href="#" data-section="courses"><i class="fas fa-book"></i> Browse Courses</a>
     <a href="#" data-section="apply"><i class="fas fa-file-signature"></i> Apply</a>
     <a href="#" data-section="events"><i class="fas fa-calendar-alt"></i> Events</a>
+    <a href="#" data-section="resources"><i class="fas fa-info-circle"></i> Resources</a>
     <a href="#" data-section="contact"><i class="fas fa-envelope"></i> Contact</a>
   </nav>
 
   <main class="main-content">
-    <!-- Dashboard Section -->
+    <!-- Dashboard -->
     <section id="dashboard" class="active">
-      <h1>Welcome to Upskill Tech College</h1>
-      <p>Empower your future with cutting-edge tech education.</p>
+      <div class="dashboard-content">
+        <h1>Welcome to Upskill Tech College</h1>
+        <p>Join our vibrant community to gain cutting-edge skills and transform your career!</p>
+
+        <!-- Campus Tour -->
+        <div class="campus-tour">
+          <h2>Explore Our Campus</h2>
+          <div class="tour-card">
+            <img src="https://via.placeholder.com/200x120" alt="Campus Library" />
+            <h4>Library</h4>
+            <p>Access thousands of resources to support your learning.</p>
+          </div>
+          <div class="tour-card">
+            <img src="https://via.placeholder.com/200x120" alt="Tech Labs" />
+            <h4>Tech Labs</h4>
+            <p>Hands-on labs for coding, networking, and design.</p>
+          </div>
+          <div class="tour-card">
+            <img src="https://via.placeholder.com/200x120" alt="Student Lounge" />
+            <h4>Student Lounge</h4>
+            <p>Connect with peers in our modern lounge.</p>
+          </div>
+        </div>
+
+        <!-- Featured Course -->
+        <div class="featured-course">
+          <img src="https://via.placeholder.com/150" alt="Featured Course" />
+          <div>
+            <h3>Full Stack Web Development</h3>
+            <p>Master web development with HTML, CSS, JavaScript, and backend frameworks.</p>
+            <a href="#" data-section="apply" class="quick-link">Apply Now</a>
+          </div>
+        </div>
+
+        <!-- Faculty Spotlight -->
+        <div class="faculty-spotlight">
+          <h2>Meet Our Faculty</h2>
+          <div class="faculty-card">
+            <img src="https://via.placeholder.com/100" alt="Dr. Alice" />
+            <h4>Dr. Alice Johnson</h4>
+            <p>Expert in Web Development</p>
+          </div>
+          <div class="faculty-card">
+            <img src="https://via.placeholder.com/100" alt="Prof. Mark" />
+            <h4>Prof. Mark Lee</h4>
+            <p>Cybersecurity Specialist</p>
+          </div>
+        </div>
+
+        <!-- Blog Preview -->
+        <div class="blog-preview">
+          <h3>Upskilling Tips</h3>
+          <p><strong>Why Learn to Code?</strong> Coding opens doors to endless opportunities in tech...</p>
+          <a href="#" class="quick-link">Read More</a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+          <a href="#" data-section="available-courses">Available Courses</a>
+          <a href="#" data-section="apply">Apply Now</a>
+          <a href="#" data-section="events">View Events</a>
+        </div>
+
+        <!-- Testimonials Carousel -->
+        <div class="testimonials">
+          <div class="testimonial-card active">
+            <p>"Upskill Tech transformed my career with hands-on courses!"</p>
+            <h4>John Doe, Web Developer</h4>
+          </div>
+          <div class="testimonial-card">
+            <p>"The instructors are top-notch, especially in cybersecurity."</p>
+            <h4>Jane Smith, IT Specialist</h4>
+          </div>
+          <div class="testimonial-card">
+            <p>"I landed my dream job thanks to Upskill Tech!"</p>
+            <h4>Mike Brown, Designer</h4>
+          </div>
+          <div class="carousel-controls">
+            <button id="prevTestimonial"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextTestimonial"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+          <h3>Your Learning Progress</h3>
+          <p>Track your course completion (Demo: 60% complete)</p>
+          <div class="progress-bar">
+            <div></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Courses Section -->
-    <section id="courses">
+    <!-- Available Courses -->
+    <section id="available-courses">
       <h2>Available Courses</h2>
-      <p>Browse our course catalog below.</p>
+      <div class="course-schedule">
+        <h3>Course Schedule</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Duration</th>
+              <th>Level</th>
+              <th>Start Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Full Stack Web Development</td>
+              <td>6 Months</td>
+              <td>Intermediate</td>
+              <td>July 1, 2025</td>
+            </tr>
+            <tr>
+              <td>Network Security</td>
+              <td>4 Months</td>
+              <td>Advanced</td>
+              <td>August 15, 2025</td>
+            </tr>
+            <tr>
+              <td>Graphic Design Basics</td>
+              <td>3 Months</td>
+              <td>Beginner</td>
+              <td>June 20, 2025</td>
+            </tr>
+            <tr>
+              <td>Project Management</td>
+              <td>4 Months</td>
+              <td>Intermediate</td>
+              <td>September 10, 2025</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
-    <!-- Apply Section -->
+    <!-- Browse Courses -->
+    <section id="courses">
+      <h2>Browse Courses</h2>
+      <div class="course-search">
+        <input type="text" id="searchInput" placeholder="Search courses..." />
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+          <option value="programming">Programming</option>
+          <option value="networking">Networking</option>
+          <option value="design">Design</option>
+          <option value="management">Management</option>
+        </select>
+      </div>
+      <div class="course-list" id="courseList">
+        <!-- Dynamically loaded courses -->
+      </div>
+    </section>
+
+    <!-- Apply -->
     <section id="apply">
       <h2>Apply for a Course</h2>
-      <p>Fill out our application form to get started.</p>
+      <form id="applyForm">
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <select required>
+          <option value="" disabled selected>Select Course</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Network Security">Network Security</option>
+          <option value="Graphic Design">Graphic Design</option>
+          <option value="Project Management">Project Management</option>
+        </select>
+        <textarea placeholder="Why do you want to join this course?" required></textarea>
+        <button type="submit">Submit Application</button>
+      </form>
     </section>
 
-    <!-- Events Section -->
+    <!-- Events -->
     <section id="events">
       <h2>Upcoming Events</h2>
-      <p>Check out our upcoming workshops and seminars.</p>
+      <ul>
+        <li><strong>Tech Expo 2025</strong> - March 10, 2025</li>
+        <li><strong>Workshop: Network Security</strong> - April 5, 2025</li>
+        <li><strong>Design Thinking Seminar</strong> - May 20, 2025</li>
+      </ul>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Resources -->
+    <section id="resources">
+      <h2>Student Resources</h2>
+      <div class="resources-list">
+        <a href="#" onclick="alert('Study Tips: Create a schedule and practice daily!')">Study Tips for Success</a>
+        <a href="#" onclick="alert('Career Advice: Build a portfolio to showcase your skills.')">Career Advice</a>
+        <a href="#" onclick="alert('Tech Trends: Stay updated with AI and cloud computing.')">Tech Trends</a>
+      </div>
+    </section>
+
+    <!-- Contact -->
     <section id="contact">
       <h2>Contact Us</h2>
-      <p>Get in touch with our team.</p>
+      <p>Email: info@upskilltech.edu</p>
+      <p>Phone: +265 123 456 789</p>
+      <p>Address: 123 Tech Road, Lilongwe, Malawi</p>
+      <div class="newsletter-form">
+        <h3>Subscribe to Our Newsletter</h3>
+        <form id="newsletterForm">
+          <input type="email" placeholder="Enter your email" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
     </section>
+
+    <!-- Social Media Footer -->
+    <div class="social-footer">
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
   </main>
+
+  <!-- Live Chat Support -->
+  <div class="live-chat" id="liveChat" title="Live Chat Support">
+    <i class="fas fa-comments"></i>
+  </div>
 
   <!-- Virtual Assistant -->
   <div class="assistant" id="assistant" title="Chat with Upskill Assistant">
@@ -326,20 +973,16 @@
   </div>
 
   <script>
-    // Sidebar Toggle Functionality
-    const menuToggle = document.getElementById('menuToggle');
+    // Sidebar navigation and toggle
+    const links = document.querySelectorAll('.sidebar a, .quick-link');
+    const sections = document.querySelectorAll('main section');
     const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
     const backdrop = document.getElementById('backdrop');
-    const mainContent = document.querySelector('.main-content');
 
     menuToggle.addEventListener('click', () => {
       sidebar.classList.toggle('open');
       backdrop.classList.toggle('active');
-      
-      // Close the assistant if open when toggling sidebar
-      if (assistant.classList.contains('open')) {
-        closeAssistant();
-      }
     });
 
     backdrop.addEventListener('click', () => {
@@ -347,32 +990,17 @@
       backdrop.classList.remove('active');
     });
 
-    // Navigation between sections
-    const navLinks = document.querySelectorAll('.sidebar a');
-    const sections = document.querySelectorAll('main section');
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+    links.forEach(link => {
+      link.addEventListener('click', e => {
         e.preventDefault();
-        
-        // Remove active class from all links
-        navLinks.forEach(l => l.classList.remove('active'));
-        
-        // Add active class to clicked link
+        links.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
-        
-        // Get the target section
-        const targetSection = link.getAttribute('data-section');
-        
-        // Hide all sections
-        sections.forEach(section => {
-          section.classList.remove('active');
+
+        const target = link.getAttribute('data-section');
+        sections.forEach(sec => {
+          sec.classList.toggle('active', sec.id === target);
         });
-        
-        // Show the target section
-        document.getElementById(targetSection).classList.add('active');
-        
-        // Close sidebar on mobile after navigation
+
         if (window.innerWidth <= 768) {
           sidebar.classList.remove('open');
           backdrop.classList.remove('active');
@@ -380,7 +1008,86 @@
       });
     });
 
-    // Virtual Assistant Functionality
+    // Courses Data
+    const courses = [
+      {
+        title: 'Full Stack Web Development',
+        category: 'programming',
+        description: 'Learn to build complete web applications using HTML, CSS, JS, and backend frameworks.'
+      },
+      {
+        title: 'Network Security',
+        category: 'networking',
+        description: 'Protect networks from attacks and learn security protocols and practices.'
+      },
+      {
+        title: 'Graphic Design Basics',
+        category: 'design',
+        description: 'Master design fundamentals using Adobe Photoshop and Illustrator.'
+      },
+      {
+        title: 'Project Management',
+        category: 'management',
+        description: 'Gain skills to manage projects efficiently using Agile and Scrum.'
+      },
+      {
+        title: 'Mobile App Development',
+        category: 'programming',
+        description: 'Create Android and iOS apps using React Native and Flutter.'
+      },
+      {
+        title: 'Cybersecurity Essentials',
+        category: 'networking',
+        description: 'Introduction to cybersecurity principles and threat detection.'
+      },
+    ];
+
+    // Render courses
+    const courseList = document.getElementById('courseList');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+
+    function renderCourses() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedCategory = categoryFilter.value;
+
+      const filtered = courses.filter(course => {
+        const matchesSearch = course.title.toLowerCase().includes(searchTerm) || course.description.toLowerCase().includes(searchTerm);
+        const matchesCategory = selectedCategory === '' || course.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+      });
+
+      courseList.innerHTML = filtered.map(course => `
+        <div class="course-card" tabindex="0" role="button" aria-pressed="false" onclick="alert('Interested in ${course.title}? Go to Apply section!')">
+          <h4>${course.title}</h4>
+          <p>${course.description}</p>
+        </div>
+      `).join('');
+    }
+
+    searchInput.addEventListener('input', renderCourses);
+    categoryFilter.addEventListener('change', renderCourses);
+
+    // Initial render
+    renderCourses();
+
+    // Form submit
+    const applyForm = document.getElementById('applyForm');
+    applyForm.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you for applying! We will contact you soon.');
+      applyForm.reset();
+    });
+
+    // Newsletter Form
+    const newsletterForm = document.getElementById('newsletterForm');
+    newsletterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you for subscribing to our newsletter!');
+      newsletterForm.reset();
+    });
+
+    // Virtual Assistant
     const assistant = document.getElementById('assistant');
     let isAssistantOpen = false;
     let lastAssistantMessage = '';
@@ -399,56 +1106,88 @@
           <h3>Upskill Assistant</h3>
           <span class="close-btn" title="Close Assistant">×</span>
         </div>
-        <div class="chat" id="assistantChat">
-          <p><strong>Assistant:</strong> Hello! I'm your Upskill assistant. How can I help you today?</p>
-          <p><strong>Assistant:</strong> Try asking about "courses", "apply", or "contact".</p>
+        <div class="chat">
+          <p><strong>Assistant:</strong> Hello! I'm your virtual advisor at Upskill Tech College. How can I assist you today?</p>
+          <p><em>Try "courses", "apply", "events", or "campus".</em></p>
         </div>
         <div class="input-area">
           <input type="text" id="chatInput" placeholder="Type your message..." />
-          <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+          <button id="sendBtn">Send</button>
         </div>
+      
       `;
 
-      // Close button
       const closeBtn = assistant.querySelector('.close-btn');
-      closeBtn.addEventListener('click', closeAssistant);
+      closeBtn.addEventListener('click', () => {
+        closeAssistant();
+      });
 
-      // Send button and input field
       const chatInput = document.getElementById('chatInput');
       const sendBtn = document.getElementById('sendBtn');
-      const chat = document.getElementById('assistantChat');
+      const chat = assistant.querySelector('.chat');
 
-      function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-          // Add user message to chat
-          const userMsg = document.createElement('p');
-          userMsg.innerHTML = <strong>You:</strong> ${message};
-          chat.appendChild(userMsg);
-          
-          // Process message and generate response
-          processMessage(message.toLowerCase());
-          
-          // Clear input
-          chatInput.value = '';
-          
-          // Scroll to bottom
-          chat.scrollTop = chat.scrollHeight;
-        }
-      }
+      sendBtn.addEventListener('click', () => {
+        sendMessage();
+      });
 
-      // Send message on button click
-      sendBtn.addEventListener('click', sendMessage);
-      
-      // Send message on Enter key
-      chatInput.addEventListener('keypress', (e) => {
+      chatInput.addEventListener('keypress', e => {
         if (e.key === 'Enter') {
           sendMessage();
         }
       });
 
-      // Focus input field when assistant opens
-      chatInput.focus();
+      function sendMessage() {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+        appendMessage('You', msg);
+        respondToMessage(msg.toLowerCase());
+        chatInput.value = '';
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+      function appendMessage(sender, text) {
+        const p = document.createElement('p');
+        p.innerHTML = <strong>${sender}:</strong> ${text};
+        chat.appendChild(p);
+        if (sender === 'Assistant') {
+          lastAssistantMessage = text;
+        }
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+      function respondToMessage(msg) {
+        let response = "Sorry, I didn't catch that. Try 'courses', 'apply', 'events', or 'campus'.";
+
+        if (msg.includes('course') || msg.includes('courses')) {
+          response = 'Check out our Available Courses or Browse Courses sections for upskilling programs. Want to go there? (yes/no)';
+        } else if (msg.includes('apply')) {
+          response = 'Ready to join? The Apply section has the form. Want me to take you there? (yes/no)';
+        } else if (msg.includes('event') || msg.includes('events')) {
+          response = 'Our Events section lists upcoming tech expos and workshops. Want to see them? (yes/no)';
+        } else if (msg.includes('campus')) {
+          response = 'Explore our virtual campus tour on the Dashboard. Want to check it out? (yes/no)';
+        } else if (msg === 'yes' && lastAssistantMessage) {
+          if (lastAssistantMessage.includes('Courses')) {
+            navigateTo('available-courses');
+            response = 'Navigating to Available Courses...';
+          } else if (lastAssistantMessage.includes('Apply')) {
+            navigateTo('apply');
+            response = 'Navigating to Apply...';
+          } else if (lastAssistantMessage.includes('Events')) {
+            navigateTo('events');
+            response = 'Navigating to Events...';
+          } else if (lastAssistantMessage.includes('campus')) {
+            navigateTo('dashboard');
+            response = 'Navigating to Dashboard for the campus tour...';
+          } else {
+            response = 'Please specify what you want to navigate to by typing "courses", "apply", "events", or "campus" first.';
+          }
+        } else if (msg === 'no') {
+          response = 'No problem! What else can I help you with?';
+        }
+
+        appendMessage('Assistant', response);
+      }
     }
 
     function closeAssistant() {
@@ -458,80 +1197,49 @@
       lastAssistantMessage = '';
     }
 
-    function processMessage(message) {
-      const chat = document.getElementById('assistantChat');
-      let response = "I'm not sure I understand. You can ask about 'courses', 'apply', or 'contact'.";
-      
-      if (message.includes('course') || message.includes('classes')) {
-        response = "We offer various tech courses. Would you like me to take you to the Courses section? (yes/no)";
-        lastAssistantMessage = "navigate to courses";
-      } 
-      else if (message.includes('apply') || message.includes('application')) {
-        response = "You can apply for courses in the Apply section. Should I take you there? (yes/no)";
-        lastAssistantMessage = "navigate to apply";
-      }
-      else if (message.includes('contact') || message.includes('help')) {
-        response = "Our contact information is in the Contact section. Want me to show you? (yes/no)";
-        lastAssistantMessage = "navigate to contact";
-      }
-      else if (message === 'yes' && lastAssistantMessage) {
-        if (lastAssistantMessage.includes('courses')) {
-          navigateToSection('courses');
-          response = "Taking you to the Courses section...";
-        }
-        else if (lastAssistantMessage.includes('apply')) {
-          navigateToSection('apply');
-          response = "Taking you to the Apply section...";
-        }
-        else if (lastAssistantMessage.includes('contact')) {
-          navigateToSection('contact');
-          response = "Taking you to the Contact section...";
-        }
-      }
-      else if (message === 'no') {
-        response = "Okay, let me know if you need anything else!";
-      }
-      else if (message.includes('hello') || message.includes('hi')) {
-        response = "Hello there! How can I help you today?";
-      }
-
-      // Add assistant response to chat
-      const assistantMsg = document.createElement('p');
-      assistantMsg.innerHTML = <strong>Assistant:</strong> ${response};
-      chat.appendChild(assistantMsg);
-      
-      // Scroll to bottom
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    function navigateToSection(sectionId) {
-      // Update active nav link
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section') === sectionId) {
-          link.classList.add('active');
-        }
-      });
-      
-      // Update active section
-      sections.forEach(section => {
-        section.classList.remove('active');
-        if (section.id === sectionId) {
-          section.classList.add('active');
-        }
-      });
-      
-      // Close assistant
-      closeAssistant();
-    }
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) {
-        sidebar.classList.remove('open');
-        backdrop.classList.remove('active');
-      }
+    // Live Chat Support
+    const liveChat = document.getElementById('liveChat');
+    liveChat.addEventListener('click', () => {
+      alert('Live Chat Support: Our team is here to help! Email us at info@upskilltech.edu.');
     });
+
+    // Navigation helper
+    function navigateTo(sectionId) {
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('data-section') === sectionId);
+      });
+      sections.forEach(sec => {
+        sec.classList.toggle('active', sec.id === sectionId);
+      });
+    }
+
+    // Testimonials Carousel
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    const prevTestimonial = document.getElementById('prevTestimonial');
+    const nextTestimonial = document.getElementById('nextTestimonial');
+    let currentTestimonial = 0;
+
+    function showTestimonial(index) {
+      testimonials.forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+      });
+    }
+
+    prevTestimonial.addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    });
+
+    nextTestimonial.addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    });
+
+    // Auto-rotate testimonials every 5 seconds
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }, 5000);
   </script>
 </body>
 </html>
