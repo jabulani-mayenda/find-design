@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hire Labour</title>
+    <title>Hire Labour - Modernized</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display濃: center;
             padding: 20px;
-            background-color: #ffffff; /* White background */
-            text-align: center;
-            color: #000000; /* Black text */
+            color: #333;
         }
 
         header {
-            background-color: #000000; /* Black header */
-            color: #ffffff; /* White text */
-            padding: 10px;
-            border-radius: 5px;
+            background: linear-gradient(90deg, #1a1a1a, #333);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease;
         }
 
         h1, h2 {
@@ -26,82 +35,133 @@
         }
 
         main {
-            margin-top: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
         }
 
         p {
             font-size: 18px;
-            color: #000000; /* Black text */
+            color: #333;
         }
 
-        button {
-            background-color: #ff0000; /* Red button */
-            color: #ffffff; /* White text */
+        button, input[type="submit"], .btn {
+            background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
+            color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
             margin: 10px;
+            transition: transform 0.2s, background 0.2s;
         }
 
-        button:hover {
-            background-color: #cc0000; /* Darker red on hover */
+        button:hover, input[type="submit"]:hover, .btn:hover {
+            background: linear-gradient(90deg, #e60000, #cc0000);
+            transform: scale(1.05);
         }
 
-        #labor-form {
+        #labor-form, #labor-list {
             display: none;
-            margin-top: 20px;
-            background-color: #ffffff; /* White card */
-            padding: 20px;
-            border: 1px solid #000000; /* Black border */
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        select, input[type="submit"] {
-            padding: 8px;
+        select {
+            padding: 10px;
             margin: 10px;
-            border: 1px solid #000000; /* Black border */
+            border: 2px solid #333;
             border-radius: 5px;
             font-size: 16px;
-        }
-
-        input[type="submit"] {
-            background-color: #ff0000; /* Red button */
-            color: #ffffff; /* White text */
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #cc0000; /* Darker red */
-        }
-
-        #labor-list {
-            display: none;
-            margin-top: 20px;
-            background-color: #ffffff; /* White card */
-            padding: 20px;
-            border: 1px solid #000000; /* Black border */
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: calc(100% - 20px);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .labor-item {
-            border-bottom: 1px solid #000000; /* Black divider */
-            padding: 10px 0;
-            color: #000000; /* Black text */
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: #333;
+            transition: background 0.2s;
+        }
+
+        .labor-item:hover {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .labor-item:last-child {
             border-bottom: none;
         }
 
-        #login-prompt {
+        #login-modal {
             display: none;
-            color: #ff0000; /* Red prompt */
-            font-weight: bold;
-            font-size: 18px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff4d4d;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            button, input[type="submit"], .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -110,37 +170,51 @@
         <h1>Hire Labour</h1>
     </header>
     <main>
-        <p id="message">Welcome! Click 'Hire Labour' to find workers or toggle login.</p>
-        <button onclick="toggleLogin()">Toggle Login (Simulate)</button>
-        <button onclick="showLaborForm()">Hire Labour</button>
-        <p id="login-prompt">Please log in to hire labour.</p>
-        <form id="labor-form">
+        <div class="card">
+            <p id="message">Welcome! Click 'Hire Labour' to find workers or toggle login.</p>
+            <button onclick="toggleLogin()" aria-label="Toggle login status">Toggle Login (Simulate)</button>
+            <button onclick="showLaborForm()" aria-label="Hire labour">Hire Labour</button>
+        </div>
+        <div id="labor-form" class="card">
             <h2>Select Labour</h2>
-            <label for="labor-type">Labour Type:</label>
-            <select id="labor-type" name="labor-type">
-                <option value="plumber">Plumber</option>
-                <option value="electrician">Electrician</option>
-                <option value="carpenter">Carpenter</option>
-            </select>
-            <br>
-            <label for="location">Location:</label>
-            <select id="location" name="location">
-                <option value="new-york">New York</option>
-                <option value="london">London</option>
-                <option value="tokyo">Tokyo</option>
-            </select>
-            <br>
-            <input type="submit" value="Find Labour" onclick="findLabour()">
-        </form>
-        <div id="labor-list">
+            <form onsubmit="event.preventDefault(); findLabour();">
+                <label for="labor-type">Labour Type:</label>
+                <select id="labor-type" name="labor-type" required aria-label="Select labour type">
+                    <option value="" disabled selected>Select a type</option>
+                    <option value="plumber">Plumber</option>
+                    <option value="electrician">Electrician</option>
+                    <option value="carpenter">Carpenter</option>
+                </select>
+                <br>
+                <label for="location">Location:</label>
+                <select id="location" name="location" required aria-label="Select location">
+                    <option value="" disabled selected>Select a location</option>
+                    <option value="new-york">New York</option>
+                    <option value="london">London</option>
+                    <option value="tokyo">Tokyo</option>
+                </select>
+                <br>
+                <input type="submit" value="Find Labour" aria-label="Find labour">
+                <button type="button" class="btn" onclick="resetForm()" aria-label="Clear filters">Clear Filters</button>
+            </form>
+            <div class="loader" id="loader"></div>
+        </div>
+        <div id="labor-list" class="card">
             <h2>Available Labour</h2>
             <div id="labor-results"></div>
+            <button class="btn" onclick="backToForm()" aria-label="Back to form">Back to Form</button>
+        </div>
+        <div id="login-modal">
+            <div class="modal-content">
+                <h2>Login Required</h2>
+                <p>Please log in to hire labour.</p>
+                <button class="btn" onclick="closeModal()" aria-label="Close login prompt">Close</button>
+            </div>
         </div>
     </main>
     <script>
-        let isLoggedIn = false; // Simulate login state (backend would set this)
+        let isLoggedIn = false;
 
-        // Mock labor data (replace with backend API later)
         const laborData = [
             { type: "plumber", location: "new-york", name: "John Doe - Plumber" },
             { type: "plumber", location: "london", name: "Jane Smith - Plumber" },
@@ -155,41 +229,70 @@
             const message = document.getElementById("message");
             message.textContent = isLoggedIn 
                 ? "You are logged in! Click 'Hire Labour' to find workers." 
-                : "You are logged out. Log in to hire labour.";
-            message.style.color = isLoggedIn ? "#ff0000" : "#000000"; /* Red when logged in, black when logged out */
+                : "Welcome! Click 'Hire Labour' to find workers or toggle login.";
+            message.style.color = isLoggedIn ? "#ff4d4d" : "#333";
             document.getElementById("labor-form").style.display = "none";
             document.getElementById("labor-list").style.display = "none";
-            document.getElementById("login-prompt").style.display = "none";
+            document.getElementById("login-modal").style.display = "none";
         }
 
         function showLaborForm() {
             const laborForm = document.getElementById("labor-form");
             const laborList = document.getElementById("labor-list");
-            const loginPrompt = document.getElementById("login-prompt");
+            const loginModal = document.getElementById("login-modal");
             if (isLoggedIn) {
                 laborForm.style.display = "block";
                 laborList.style.display = "none";
-                loginPrompt.style.display = "none";
+                loginModal.style.display = "none";
             } else {
                 laborForm.style.display = "none";
                 laborList.style.display = "none";
-                loginPrompt.style.display = "block";
+                loginModal.style.display = "flex";
             }
         }
 
-        function findLabour() {
-            if (!isLoggedIn) return; // Safety check
+        function closeModal() {
+            document.getElementById("login-modal").style.display = "none";
+        }
+
+        function resetForm() {
+            document.getElementById("labor-type").value = "";
+            document.getElementById("location").value = "";
+            document.getElementById(" labor-form").style.display = "block";
+            document.getElementById("labor-list").style.display = "none";
+        }
+
+        function backToForm() {
+            document.getElementById("labor-form").style.display = "block";
+            document.getElementById("labor-list").style.display = "none";
+        }
+
+        async function findLabour() {
+            if (!isLoggedIn) return;
+
             const laborType = document.getElementById("labor-type").value;
             const location = document.getElementById("location").value;
             const resultsDiv = document.getElementById("labor-results");
             const laborList = document.getElementById("labor-list");
+            const loader = document.getElementById("loader");
 
-            // Filter mock data (backend would query a database)
+            if (!laborType || !location) {
+                alert("Please select both labour type and location.");
+                return;
+            }
+
+            loader.style.display = "block";
+            resultsDiv.innerHTML = "";
+            laborList.style.display = "none";
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
             const filteredLabor = laborData.filter(labor => 
                 labor.type === laborType && labor.location === location
             );
 
-            // Display results
+            loader.style.display = "none";
             resultsDiv.innerHTML = "";
             if (filteredLabor.length > 0) {
                 filteredLabor.forEach(labor => {
@@ -206,7 +309,6 @@
             }
             laborList.style.display = "block";
 
-            // Log for backend integration (e.g., POST request)
             console.log("Form submitted:", { laborType, location });
         }
     </script>
