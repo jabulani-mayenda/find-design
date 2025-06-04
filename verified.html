@@ -4,21 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
             padding: 20px;
-            background-color: #ffffff; /* White background */
+            background: linear-gradient(45deg, #1a1a1a, #000);
+            color: #fff;
             text-align: center;
-            color: #000000; /* Black text */
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: #000000; /* Black header */
-            color: #ffffff; /* White text */
-            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            padding: 15px;
             border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
         }
 
         h1, h2 {
@@ -26,97 +39,410 @@
         }
 
         main {
-            margin-top: 20px;
+            margin-top: 30px;
+            z-index: 2;
         }
 
-        p {
-            font-size: 18px;
-            color: #000000; /* Black text */
+        p#message {
+            font-size: 20px;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
         }
 
         button {
-            background-color: #ff0000; /* Red button */
-            color: #ffffff; /* White text */
-            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             margin: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            touch-action: manipulation; /* Ensure touch events work */
         }
 
         button:hover {
-            background-color: #cc0000; /* Darker red on hover */
+            background-color: #cc0000;
+            transform: scale(1.1);
         }
 
         #job-list {
             display: none;
-            margin-top: 20px;
-            background-color: #ffffff; /* White card */
+            margin-top: 30px;
+            background-color: #fff;
             padding: 20px;
-            border: 1px solid #000000; /* Black border */
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .job-item {
-            border-bottom: 1px solid #000000; /* Black divider */
-            padding: 10px 0;
-            color: #000000; /* Black text */
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            color: #000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .job-item:last-child {
-            border-bottom: none;
+        .job-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .job-item i {
+            font-size: 2rem;
+            margin-right: 15px;
+            color: #ff0000;
+        }
+
+        .job-details h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: #000;
+        }
+
+        .job-details p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: #333;
         }
 
         #login-prompt {
             display: none;
-            color: #ff0000; /* Red prompt */
+            color: #ff0000;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
+            margin-top: 20px;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+        }
+
+        canvas#particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
+    <canvas id="particles"></canvas>
     <header>
         <h1>Job Portal</h1>
     </header>
     <main>
-        <p id="message">Welcome! Explore courses or toggle login to view jobs.</p>
-        <button onclick="toggleLogin()">Toggle Login (Simulate)</button>
-        <button onclick="viewCourses()">View Courses</button>
-        <p id="login-prompt">Please log in to view available jobs.</p>
-        <div id="job-list">
+        <p id="message" aria-live="polite">Welcome! Explore courses or toggle login to view jobs.</p>
+        <button id="toggleLoginBtn">Toggle Login (Simulate)</button>
+        <button id="viewJobsBtn">View Jobs</button>
+        <p id="login-prompt" aria-live="polite">Please log in to view available jobs.</p>
+        <div id="job-list" aria-live="polite">
             <h2>Available Jobs</h2>
-            <div class="job-item">Web Developer - Full-time, Remote</div>
-            <div class="job-item">Data Analyst - Part-time, On-site</div>
-            <div class="job-item">UI/UX Designer - Contract, Hybrid</div>
+            <div class="job-item plumber">
+                <i class="fas fa-wrench"></i>
+                <div class="job-details">
+                    <h3>Plumber - Full区块链-time, On-site</h3>
+                    <p>Fix pipes and maintain water systems in residential areas.</p>
+                </div>
+            </div>
+            <div class="job-item programmer">
+                <i class="fas fa-code"></i>
+                <div class="job-details">
+                    <h3>Programmer - Full-time, Remote</h3>
+                    <p>Develop software applications using Python and JavaScript.</p>
+                </div>
+            </div>
+            <div class="job-item assistant">
+                <i class="fas fa-headset"></i>
+                <div class="job-details">
+                    <h3>Assistant - Part-time, Hybrid</h3>
+                    <p>Provide administrative support and manage schedules.</p>
+                </div>
+            </div>
+            <div class="job-item teacher">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <div class="job-details">
+                    <h3>Teacher - Full-time, On-site</h3>
+                    <p>Educate students in mathematics at a local school.</p>
+                </div>
+            </div>
+            <div class="job-item data-analyst">
+                <i class="fas fa-chart-line"></i>
+                <div class="job-details">
+                    <h3>Data Analyst - Part-time, On-site</h3>
+                    <p>Analyze data trends to support business decisions.</p>
+                </div>
+            </div>
+            <div class="job-item designer">
+                <i class="fas fa-paint-brush"></i>
+                <div class="job-details">
+                    <h3>UI/UX Designer - Contract, Hybrid</h3>
+                    <p>Design user interfaces for mobile and web applications.</p>
+                </div>
+            </div>
+            <div class="job-item nurse">
+                <i class="fas fa-stethoscope"></i>
+                <div class="job-details">
+                    <h3>Nurse - Full-time, On-site</h3>
+                    <p>Provide patient care in a hospital setting.</p>
+                </div>
+            </div>
+            <div class="job-item electrician">
+                <i class="fas fa-bolt"></i>
+                <div class="job-details">
+                    <h3>Electrician - Full-time, On-site</h3>
+                    <p>Install and repair electrical systems in buildings.</p>
+                </div>
+            </div>
+            <div class="job-item chef">
+                <i class="fas fa-utensils"></i>
+                <div class="job-details">
+                    <h3>Chef - Full-time, On-site</h3>
+                    <p>Prepare gourmet dishes in a high-end restaurant.</p>
+                </div>
+            </div>
+            <div class="job-item marketer">
+                <i class="fas fa-bullhorn"></i>
+                <div class="job-details">
+                    <h3>Marketing Manager - Full-time, Remote</h3>
+                    <p>Develop marketing strategies to boost brand awareness.</p>
+                </div>
+            </div>
         </div>
     </main>
     <script>
-        let isLoggedIn = false; // Simulate login state (backend would set this)
+        let isLoggedIn = false;
 
-        function toggleLogin() {
+        // Toggle Login Functionality
+        const toggleLoginBtn = document.getElementById("toggleLoginBtn");
+        const viewJobsBtn = document.getElementById("viewJobsBtn");
+
+        // Add both click and touchstart events for better touch support
+        toggleLoginBtn.addEventListener("click", toggleLogin);
+        toggleLoginBtn.addEventListener("touchstart", toggleLogin);
+        viewJobsBtn.addEventListener("click", viewCourses);
+        viewJobsBtn.addEventListener("touchstart", viewCourses);
+
+        function toggleLogin(e) {
+            if (e.type === "touchstart") e.preventDefault(); // Prevent click event on touch
+            console.log("Toggle Login triggered, isLoggedIn:", isLoggedIn);
             isLoggedIn = !isLoggedIn;
             const message = document.getElementById("message");
             message.textContent = isLoggedIn 
-                ? "You are logged in! Click 'View Courses' to see jobs." 
+                ? "You are logged in! Click 'View Jobs' to see opportunities." 
                 : "You are logged out. Log in to view jobs.";
-            message.style.color = isLoggedIn ? "#ff0000" : "#000000"; /* Red when logged in, black when logged out */
+            
+            // Fallback if GSAP fails to load
+            if (typeof gsap !== "undefined") {
+                // Animation 1: Message color transition
+                gsap.to("#message", {
+                    color: isLoggedIn ? "#ff0000" : "#ffffff",
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+
+                // Animation 2: Message scale pulse
+                gsap.fromTo("#message", 
+                    { scale: 1 },
+                    { scale: 1.1, duration: 0.3, yoyo: true, repeat: 1, ease: "power2.out" }
+                );
+            } else {
+                // Fallback: Update color without animation
+                message.style.color = isLoggedIn ? "#ff0000" : "#ffffff";
+            }
+
+            // Reset job list and prompt
             document.getElementById("job-list").style.display = "none";
             document.getElementById("login-prompt").style.display = "none";
         }
 
-        function viewCourses() {
+        // View Jobs Functionality
+        function viewCourses(e) {
+            if (e.type === "touchstart") e.preventDefault(); // Prevent click event on touch
+            console.log("View Jobs triggered, isLoggedIn:", isLoggedIn);
             const jobList = document.getElementById("job-list");
             const loginPrompt = document.getElementById("login-prompt");
             if (isLoggedIn) {
                 jobList.style.display = "block";
                 loginPrompt.style.display = "none";
+
+                if (typeof gsap !== "undefined") {
+                    // Animation 3: Job list fade-in
+                    gsap.from(jobList, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    });
+
+                    // Animation 4-13: Job-specific animations
+                    animateJobs();
+                }
             } else {
                 jobList.style.display = "none";
                 loginPrompt.style.display = "block";
+
+                if (typeof gsap !== "undefined") {
+                    // Animation 14: Shake effect on login prompt
+                    gsap.from(loginPrompt, {
+                        x: -10,
+                        duration: 0.5,
+                        ease: "bounce.out"
+                    });
+                }
             }
+        }
+
+        // Job-Specific Animations
+        function animateJobs() {
+            if (typeof gsap === "undefined") return; // Skip animations if GSAP isn't loaded
+
+            // Animation 4: Plumber (Wrench spin)
+            gsap.to(".plumber i", {
+                rotation: 360,
+                duration: 1,
+                repeat: -1,
+                ease: "none"
+            });
+
+            // Animation 5: Programmer (Typing effect simulation)
+            gsap.to(".programmer i", {
+                scale: 1.2,
+                duration: 0.3,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+
+            // Animation 6: Assistant (Headset pulse)
+            gsap.to(".assistant i", {
+                opacity: 0.5,
+                duration: 0.5,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            // Animation 7: Teacher (Chalkboard wave)
+            gsap.to(".teacher i", {
+                x: 10,
+                duration: 0.5,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            // Animation 8: Data Analyst (Chart growth)
+            gsap.to(".data-analyst i", {
+                y: -10,
+                duration: 0.5,
+                repeat: -1,
+                yoyo: true,
+                ease: "power2.inOut"
+            });
+
+            // Animation 9: Designer (Paintbrush stroke)
+            gsap.to(".designer i", {
+                rotation: 45,
+                duration: 0.7,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            // Animation 10: Nurse (Heartbeat effect)
+            gsap.to(".nurse i", {
+                scale: 1.3,
+                duration: 0.3,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+
+            // Animation 11: Electrician (Bolt flash)
+            gsap.to(".electrician i", {
+                opacity: 0.3,
+                duration: 0.4,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+
+            // Animation 12: Chef (Utensils shake)
+            gsap.to(".chef i", {
+                x: 5,
+                duration: 0.3,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            // Animation 13: Marketer (Megaphone pulse)
+            gsap.to(".marketer i", {
+                scale: 1.2,
+                duration: 0.5,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        }
+
+        // Particle Background
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                vx: Math.random() * 2 - 1,
+                vy: Math.random() * 2 - 1
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Animation 14: Header slide-in
+        if (typeof gsap !== "undefined") {
+            gsap.from("header", {
+                y: -50,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
         }
     </script>
 </body>
