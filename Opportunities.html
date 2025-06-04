@@ -3,32 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Upskill Tech College</title>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    rel="stylesheet"
-  />
+  <title>Upskill Tech College - Job Opportunities</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #111;
+      background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
       color: white;
-      display: flex;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     /* Sidebar */
     .sidebar {
       width: 260px;
-      background-color: #0d0d0d;
+      background: rgba(13, 13, 13, 0.9);
+      backdrop-filter: blur(10px);
       border-right: 2px solid red;
       display: flex;
       flex-direction: column;
@@ -39,6 +46,7 @@
       height: 100%;
       transition: transform 0.3s ease;
       z-index: 1001;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
     }
 
     .sidebar h2 {
@@ -46,6 +54,7 @@
       margin-bottom: 2rem;
       font-size: 1.8rem;
       text-align: center;
+      animation: glow 1.5s infinite alternate;
     }
 
     .sidebar a {
@@ -58,14 +67,14 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 1rem;
-      transition: background 0.3s;
-      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
     }
 
     .sidebar a:hover,
     .sidebar a.active {
-      background-color: red;
-      color: #111;
+      background: linear-gradient(90deg, #f00, #b30000);
+      color: white;
+      transform: scale(1.05);
     }
 
     /* Toggle Button */
@@ -82,6 +91,11 @@
       font-size: 1.5rem;
       cursor: pointer;
       z-index: 1002;
+      transition: transform 0.2s;
+    }
+
+    .menu-toggle:hover {
+      transform: scale(1.1);
     }
 
     /* Main Content */
@@ -90,206 +104,280 @@
       padding: 2rem;
       margin-left: 260px;
       overflow-y: auto;
-      background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
     }
 
-    /* Virtual Assistant */
-    .assistant {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: red;
+    /* Hero Section */
+    .hero {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 3rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+      animation: slideIn 0.8s ease;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: red;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 0.15em solid red;
+      animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero button {
+      padding: 0.8rem 2rem;
+      background: linear-gradient(90deg, #f00, #b30000);
       color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
       cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+
+    .hero-icons {
       display: flex;
       justify-content: center;
-      align-items: center;
-      font-size: 1.8rem;
-      box-shadow: 0 0 10px red;
-      z-index: 1000;
-      transition: all 0.3s ease;
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
-    .assistant.open {
-      width: 300px;
-      height: 400px;
-      border-radius: 20px;
-      padding: 1rem;
-      font-size: 1rem;
-      flex-direction: column;
-      justify-content: flex-start;
-      box-shadow: 0 0 40px red;
-    }
-
-    .assistant .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .assistant .header h3 {
-      margin: 0;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .assistant .header .close-btn {
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .assistant .chat {
-      flex: 1;
-      overflow-y: auto;
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-    }
-
-    .assistant .chat p {
-      margin-bottom: 1rem;
-      line-height: 1.3;
-    }
-
-    .assistant .input-area {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .assistant input {
-      flex: 1;
-      padding: 0.5rem;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    .assistant button {
-      background: white;
+    .hero-icons i {
+      font-size: 2rem;
       color: red;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
+      animation: bounce 1.5s infinite;
     }
 
-    .assistant button:hover {
-      background: #f5f5f5;
+    .hero-icons i:nth-child(2) {
+      animation-delay: 0.3s;
     }
 
     /* Sections */
     section {
       display: none;
       animation: fadeIn 0.6s ease forwards;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
     }
 
     section.active {
       display: block;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    section h2 {
+      color: red;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      animation: glow 1.5s infinite alternate;
     }
 
-    /* Course List */
-    .course-search {
+    /* Job Listings */
+    .job-search {
       margin-bottom: 1.5rem;
       display: flex;
       gap: 1rem;
       max-width: 600px;
     }
 
-    .course-search input,
-    .course-search select {
+    .job-search input,
+    .job-search select {
       flex: 1;
       padding: 0.6rem 1rem;
       border-radius: 8px;
       border: none;
       font-size: 1rem;
       outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
     }
 
-    .course-list {
+    .job-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.5rem;
       max-width: 900px;
     }
 
-    .course-card {
-      background: #222;
+    .job-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 0 8px red;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .course-card:hover {
+    .job-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 0 15px red;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
     }
 
-    .course-card h4 {
+    .job-card h4 {
       margin-bottom: 0.5rem;
       color: red;
+      font-size: 1.2rem;
     }
 
-    .course-card p {
+    .job-card p {
       font-size: 0.9rem;
       color: #ddd;
-    }
-
-    /* Apply Form */
-    form {
-      max-width: 600px;
-      background: #222;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px red;
-    }
-
-    form input,
-    form select,
-    form textarea {
-      width: 100%;
-      padding: 0.75rem;
       margin-bottom: 1rem;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      outline: none;
-      background: #111;
-      color: white;
     }
 
-    form button {
-      padding: 0.8rem 1.5rem;
-      background: red;
+    .job-card button {
+      padding: 0.5rem 1rem;
+      background: linear-gradient(90deg, #f00, #b30000);
+      color: white;
       border: none;
       border-radius: 8px;
-      color: white;
-      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.2s;
     }
 
-    form button:hover {
-      background: #b30000;
+    .job-card button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Career Resources */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+    }
+
+    .resource-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 8px red;
+      transition: transform 0.3s;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .resource-card h4 {
+      color: red;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-slide {
+      display: none;
+      padding: 1rem;
+      text-align: center;
+      font-style: italic;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .testimonial-slide.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .testimonial-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .testimonial-nav button {
+      padding: 5px 10px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      margin-top: 2rem;
+      border-radius: 10px;
+    }
+
+    .social-links a {
+      color: red;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: transform 0.2s;
+    }
+
+    .social-links a:hover {
+      transform: scale(1.2);
+    }
+
+    /* Animations */
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: red; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px red; }
+      to { text-shadow: 0 0 20px red, 0 0 30px rgba(255, 0, 0, 0.5); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     /* Responsive */
@@ -311,108 +399,174 @@
         padding: 4rem 1rem 1rem;
       }
 
-      .assistant {
-        bottom: 70px;
-        right: 15px;
+      .hero h1 {
+        font-size: 1.8rem;
       }
 
-      .assistant.open {
-        width: 90%;
-        max-width: 320px;
-        height: 60vh;
-        max-height: 400px;
-        bottom: 80px;
-        right: 15px;
-      }
-
-      .course-list {
+      .job-list,
+      .resources-grid {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <button class="menu-toggle" id="menuToggle" title="Toggle Menu">
+  <div id="particles-js"></div>
+  <button class="menu-toggle" id="menuToggle" title="Toggle Menu" aria-label="Toggle navigation menu">
     <i class="fas fa-bars"></i>
   </button>
 
   <nav class="sidebar" id="sidebar">
     <h2>Upskill Tech</h2>
     <a href="#" class="active" data-section="dashboard"><i class="fas fa-home"></i> Dashboard</a>
-    <a href="#" data-section="courses"><i class="fas fa-book"></i> Courses</a>
+    <a href="#" data-section="jobs"><i class="fas fa-briefcase"></i> Jobs</a>
     <a href="#" data-section="apply"><i class="fas fa-file-signature"></i> Apply</a>
     <a href="#" data-section="events"><i class="fas fa-calendar-alt"></i> Events</a>
     <a href="#" data-section="contact"><i class="fas fa-envelope"></i> Contact</a>
   </nav>
 
   <main class="main-content">
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Find the Best Job Opportunities</h1>
+      <p>Launch your tech career with top roles, internships, and career support at Upskill Tech!</p>
+      <button onclick="navigateTo('jobs')">Discover Jobs</button>
+      <div class="hero-icons">
+        <i class="fas fa-briefcase"></i>
+        <i class="fas fa-rocket"></i>
+      </div>
+    </div>
+
     <!-- Dashboard -->
     <section id="dashboard" class="active">
-      <h1>Welcome to Upskill Tech College</h1>
-      <p>Explore courses, apply easily, and stay updated with events!</p>
+      <h2>Your Path to Success</h2>
+      <p>Explore top job opportunities, access career resources, and connect with employers. Upskill Tech is your gateway to a thriving tech career!</p>
+      <div class="testimonials">
+        <h2>Success Stories</h2>
+        <div class="testimonial-slide active">
+          <p>"Upskill Tech helped me land a Web Developer role in just 3 months!" - Emma T.</p>
+        </div>
+        <div class="testimonial-slide">
+          <p>"The career resources were key to my Data Analyst job!" - James K.</p>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I secured an internship thanks to Upskill Tech!" - Sarah M.</p>
+        </div>
+        <div class="testimonial-nav">
+          <button onclick="prevSlide()" aria-label="Previous testimonial">←</button>
+          <button onclick="nextSlide()" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
     </section>
 
-    <!-- Courses -->
-    <section id="courses">
-      <h2>Available Courses</h2>
-      <div class="course-search">
-        <input type="text" id="searchInput" placeholder="Search courses..." />
-        <select id="categoryFilter">
+    <!-- Jobs -->
+    <section id="jobs">
+      <h2>Job Opportunities</h2>
+      <div class="job-search">
+        <input type="text" id="searchInput" placeholder="Search jobs..." aria-label="Search jobs" />
+        <select id="categoryFilter" aria-label="Filter by category">
           <option value="">All Categories</option>
           <option value="programming">Programming</option>
-          <option value="networking">Networking</option>
-          <option value="design">Design</option>
-          <option value="management">Management</option>
+          <option value="data">Data Science</option>
+          <option value="security">Cybersecurity</option>
         </select>
       </div>
-      <div class="course-list" id="courseList">
-        <!-- Dynamically loaded courses -->
+      <div class="job-list" id="jobList">
+        <!-- Dynamically loaded jobs -->
       </div>
     </section>
 
     <!-- Apply -->
     <section id="apply">
-      <h2>Apply for a Course</h2>
+      <h2>Apply for a Job</h2>
       <form id="applyForm">
-        <input type="text" placeholder="Full Name" required />
-        <input type="email" placeholder="Email Address" required />
-        <select required>
-          <option value="" disabled selected>Select Course</option>
-          <option value="Web Development">Web Development</option>
-          <option value="Network Security">Network Security</option>
-          <option value="Graphic Design">Graphic Design</option>
-          <option value="Project Management">Project Management</option>
+        <input type="text" placeholder="Full Name" required aria-label="Full name" />
+        <input type="email" placeholder="Email Address" required aria-label="Email address" />
+        <select required aria-label="Select job role">
+          <option value="" disabled selected>Select Job Role</option>
+          <option value="Web Developer">Web Developer</option>
+          <option value="Data Analyst">Data Analyst</option>
+          <option value="Cybersecurity Specialist">Cybersecurity Specialist</option>
         </select>
-        <textarea placeholder="Why do you want to join this course?" required></textarea>
+        <textarea placeholder="Why are you a great fit for this role?" required aria-label="Motivation for applying"></textarea>
         <button type="submit">Submit Application</button>
       </form>
     </section>
 
     <!-- Events -->
     <section id="events">
-      <h2>Upcoming Events</h2>
-      <ul>
-        <li><strong>Tech Expo 2025</strong> - March 10, 2025</li>
-        <li><strong>Workshop: Network Security</strong> - April 5, 2025</li>
-        <li><strong>Design Thinking Seminar</strong> - May 20, 2025</li>
+      <h2>Career Events</h2>
+      <ul class="events-list">
+        <li><strong>Tech Career Fair 2025</strong> - March 10, 2025</li>
+        <li><strong>Resume Workshop</strong> - April 5, 2025</li>
+        <li><strong>Networking Night</strong> - May 20, 2025</li>
       </ul>
     </section>
 
     <!-- Contact -->
     <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Email: info@upskilltech.edu</p>
+      <h2>Contact Career Services</h2>
+      <p>Email: careers@upskilltech.edu</p>
       <p>Phone: +265 123 456 789</p>
       <p>Address: 123 Tech Road, Lilongwe, Malawi</p>
+    </section>
+
+    <!-- Career Resources -->
+    <section id="resources">
+      <h2>Career Resources</h2>
+      <div class="resources-grid">
+        <div class="resource-card">
+          <h4>Resume Building</h4>
+          <p>Learn how to craft a standout resume that gets noticed by top employers.</p>
+        </div>
+        <div class="resource-card">
+          <h4>Interview Prep</h4>
+          <p>Master common tech interview questions and techniques.</p>
+        </div>
+        <div class="resource-card">
+          <h4>Networking Tips</h4>
+          <p>Build connections with industry professionals to boost your career.</p>
+        </div>
+      </div>
     </section>
   </main>
 
   <!-- Virtual Assistant -->
-  <div class="assistant" id="assistant" title="Chat with Upskill Assistant">
+  <div class="assistant" id="assistant" title="Chat with Career Assistant" aria-label="Open virtual assistant">
     <i class="fas fa-robot"></i>
   </div>
 
+  <footer>
+    <p>© 2025 Upskill Tech College. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
+    // Initialize particles.js
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ff0000" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ff0000", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 3, direction: "none", random: true }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+      },
+      retina_detect: true
+    });
+
     // Sidebar navigation and toggle
     const links = document.querySelectorAll('.sidebar a');
     const sections = document.querySelectorAll('main section');
@@ -421,9 +575,9 @@
 
     menuToggle.addEventListener('click', () => {
       sidebar.classList.toggle('open');
+      menuToggle.innerHTML = sidebar.classList.contains('open') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
     });
 
-    // Close sidebar when clicking a link on mobile
     links.forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -437,88 +591,109 @@
 
         if (window.innerWidth <= 768) {
           sidebar.classList.remove('open');
+          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
         }
       });
     });
 
-    // Courses Data
-    const courses = [
+    // Job Data
+    const jobs = [
       {
-        title: 'Full Stack Web Development',
+        title: 'Web Developer',
         category: 'programming',
-        description: 'Learn to build complete web applications using HTML, CSS, JS, and backend frameworks.'
+        description: 'Build responsive websites using HTML, CSS, and JavaScript.'
       },
       {
-        title: 'Network Security',
-        category: 'networking',
-        description: 'Protect networks from attacks and learn security protocols and practices.'
+        title: 'Data Analyst',
+        category: 'data',
+        description: 'Analyze data to drive business decisions with Python and SQL.'
       },
       {
-        title: 'Graphic Design Basics',
-        category: 'design',
-        description: 'Master design fundamentals using Adobe Photoshop and Illustrator.'
+        title: 'Cybersecurity Specialist',
+        category: 'security',
+        description: 'Protect systems from threats with advanced security skills.'
       },
       {
-        title: 'Project Management',
-        category: 'management',
-        description: 'Gain skills to manage projects efficiently using Agile and Scrum.'
-      },
-      {
-        title: 'Mobile App Development',
+        title: 'Frontend Developer',
         category: 'programming',
-        description: 'Create Android and iOS apps using React Native and Flutter.'
+        description: 'Create user-friendly interfaces with React and Vue.js.'
       },
       {
-        title: 'Cybersecurity Essentials',
-        category: 'networking',
-        description: 'Introduction to cybersecurity principles and threat detection.'
+        title: 'Machine Learning Engineer',
+        category: 'data',
+        description: 'Develop AI models to solve complex problems.'
       },
+      {
+        title: 'Network Administrator',
+        category: 'security',
+        description: 'Manage and secure network infrastructure.'
+      }
     ];
 
-    // Render courses
-    const courseList = document.getElementById('courseList');
+    // Render jobs
+    const jobList = document.getElementById('jobList');
     const searchInput = document.getElementById('searchInput');
     const categoryFilter = document.getElementById('categoryFilter');
 
-    function renderCourses() {
+    function renderJobs() {
       const searchTerm = searchInput.value.toLowerCase();
       const selectedCategory = categoryFilter.value;
 
-      const filtered = courses.filter(course => {
-        const matchesSearch = course.title.toLowerCase().includes(searchTerm) || course.description.toLowerCase().includes(searchTerm);
-        const matchesCategory = selectedCategory === '' || course.category === selectedCategory;
+      const filtered = jobs.filter(job => {
+        const matchesSearch = job.title.toLowerCase().includes(searchTerm) || job.description.toLowerCase().includes(searchTerm);
+        const matchesCategory = selectedCategory === '' || job.category === selectedCategory;
         return matchesSearch && matchesCategory;
       });
 
-      courseList.innerHTML = filtered.map(course => `
-        <div class="course-card" tabindex="0" role="button" aria-pressed="false" onclick="alert('Interested in ${course.title}? Go to Apply section!')">
-          <h4>${course.title}</h4>
-          <p>${course.description}</p>
+      jobList.innerHTML = filtered.map(job => `
+        <div class="job-card" tabindex="0" role="button" aria-pressed="false" onclick="showJobInterest('${job.title}')">
+          <h4>${job.title}</h4>
+          <p>${job.description}</p>
+          <button>Apply Now</button>
         </div>
       `).join('');
     }
 
-    searchInput.addEventListener('input', renderCourses);
-    categoryFilter.addEventListener('change', renderCourses);
+    function showJobInterest(title) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      alert(Interested in ${title}? Go to the Apply section!);
+      console.log("Button click sound effect!");
+    }
 
-    // Initial render
-    renderCourses();
+    searchInput.addEventListener('input', renderJobs);
+    categoryFilter.addEventListener('change', renderJobs);
 
-    // Form submit
+    renderJobs();
+
+    // Form submission
     const applyForm = document.getElementById('applyForm');
     applyForm.addEventListener('submit', e => {
       e.preventDefault();
-      alert('Thank you for applying! We will contact you soon.');
+      confetti({
+        particleCount: 100,
+        spread: 200,
+        origin: { y: 0.6 }
+      });
+      alert('Thank you for applying! We will contact you soon!');
       applyForm.reset();
+      console.log("Form submission sound effect!");
     });
 
-    // Virtual Assistant toggle and chat simulation
+    // Virtual Assistant
     const assistant = document.getElementById('assistant');
     let isOpen = false;
 
     assistant.addEventListener('click', () => {
       if (!isOpen) {
         openAssistant();
+        confetti({
+          particleCount: 50,
+          spread: 50,
+        });
       }
     });
 
@@ -527,37 +702,30 @@
       assistant.classList.add('open');
       assistant.innerHTML = `
         <div class="header">
-          <h3>Upskill Assistant</h3>
-          <span class="close-btn" title="Close Assistant">×</span>
+          <h3>Career Assistant</h3>
+          <span class="close-btn" title="Close Assistant" aria-label="Close virtual assistant">×</span>
         </div>
         <div class="chat">
-          <p><strong>Assistant:</strong> Welcome to Upskill Tech! How can I help you today?</p>
-          <p><em>Try typing "courses", "apply", or "events".</em></p>
+          <p><strong>Assistant:</strong> Ready to find your dream job? Ask about jobs, applications, or career events!</p>
+          <p><em>Try typing "jobs", "apply", or "events".</em></p>
         </div>
         <div class="input-area">
-          <input type="text" id="chatInput" placeholder="Type your message..." />
-          <button id="sendBtn">Send</button>
+          <input type="text" id="chatInput" placeholder="Type your message..." aria-label="Chat input" />
+          <button id="sendBtn" aria-label="Send message">Send</button>
         </div>
       `;
 
-      // Close button handler
       assistant.querySelector('.close-btn').addEventListener('click', () => {
         closeAssistant();
       });
 
-      // Sendbutton and Enter key handler
       const chatInput = document.getElementById('chatInput');
       const sendBtn = document.getElementById('sendBtn');
       const chat = assistant.querySelector('.chat');
 
-      sendBtn.addEventListener('click', () => {
-        sendMessage();
-      });
-
+      sendBtn.addEventListener('click', sendMessage);
       chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          sendMessage();
-        }
+        if (e.key === 'Enter') sendMessage();
       });
 
       function sendMessage() {
@@ -573,24 +741,22 @@
         const p = document.createElement('p');
         p.innerHTML = <strong>${sender}:</strong> ${text};
         chat.appendChild(p);
-        chat.scrollTop = chat.scrollHeight;
       }
 
       function respondToMessage(msg) {
-        let response = "Sorry, I didn't understand that. Try 'courses', 'apply', or 'events'.";
-
-        if (msg.includes('course') || msg.includes('courses')) {
-          response = 'You can browse courses in the Courses section. Want me to take you there? (yes/no)';
+        let response = "Sorry, I didn't understand. Try 'jobs', 'apply', or 'events'.";
+        if (msg.includes('job') || msg.includes('jobs')) {
+          response = 'Check out top roles in the Jobs section. Want to explore? (yes/no)';
         } else if (msg.includes('apply')) {
-          response = 'The Apply section lets you submit your application. Would you like me to navigate you there? (yes/no)';
+          response = 'Apply for jobs in the Apply section. Need help? (yes/no)';
         } else if (msg.includes('event') || msg.includes('events')) {
-          response = 'Upcoming events are listed in the Events section. Want me to show you? (yes/no)';
+          response = 'Join career events listed in the Events section. Interested? (yes/no)';
         } else if (msg === 'yes') {
           const lastMsg = chat.querySelector('p:last-child strong');
           if (lastMsg && lastMsg.textContent === 'Assistant:') {
-            if (response.includes('Courses')) {
-              navigateTo('courses');
-              response = 'Navigating to Courses...';
+            if (response.includes('Jobs')) {
+              navigateTo('jobs');
+              response = 'Navigating to Jobs...';
             } else if (response.includes('Apply')) {
               navigateTo('apply');
               response = 'Navigating to Apply...';
@@ -600,18 +766,19 @@
             }
           }
         } else if (msg === 'no') {
-          response = 'Alright! Let me know if you need anything else.';
+          response = 'No problem! Let me know how I can assist.';
         }
-
-        appendMessage('Assistant', response);
-        chat.scrollTop = chat.scrollHeight;
+        setTimeout(() => {
+          appendMessage('Assistant', response);
+          chat.scrollTop = chat.scrollHeight;
+        }, 500);
       }
     }
 
     function closeAssistant() {
       isOpen = false;
       assistant.classList.remove('open');
-      assistant.innerHTML = <i class="fas fa-robot"></i>;
+      assistant.innerHTML = '<i class="fas fa-robot"></i>';
     }
 
     // Navigation helper
@@ -622,6 +789,30 @@
       sections.forEach(sec => {
         sec.classList.toggle('active', sec.id === sectionId);
       });
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    }
+
+    // Testimonials slider
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.testimonial-slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
     }
   </script>
 </body>
