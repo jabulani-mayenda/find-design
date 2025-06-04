@@ -3,327 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Platform - Courses</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap" rel="stylesheet">
+    <title>Hire Labour - Modernized</title>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background-color: #ffffff; /* White background */
-            color: #000000; /* Black text */
+            padding: 0;
         }
 
-        /* Sticky Header */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display濃: center;
+            padding: 20px;
+            color: #333;
+        }
+
         header {
-            background-color: #000000; /* Black */
-            color: #ffffff; /* White */
-            padding: 10px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            text-shadow: 0 0 5px #ff0000; /* Red glow */
-        }
-
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-        }
-
-        nav a:hover {
-            text-decoration: underline #ff0000; /* Red underline */
-            text-underline-offset: 4px;
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        /* Sections */
-        section {
-            padding: 40px 20px;
-            animation: fade-in 0.5s ease-in-out;
-        }
-
-        #hero {
-            background: linear-gradient(135deg, #ff0000, #cc0000); /* Red gradient */
-            color: #ffffff;
+            background: linear-gradient(90deg, #1a1a1a, #333);
+            color: white;
+            padding: 15px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease;
         }
 
-        #hero::before {
-            content: '';
-            position: absolute;
+        h1, h2 {
+            margin: 0;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        button, input[type="submit"], .btn {
+            background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        button:hover, input[type="submit"]:hover, .btn:hover {
+            background: linear-gradient(90deg, #e60000, #cc0000);
+            transform: scale(1.05);
+        }
+
+        #labor-form, #labor-list {
+            display: none;
+        }
+
+        select {
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            font-size: 16px;
+            width: calc(100% - 20px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .labor-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: #333;
+            transition: background 0.2s;
+        }
+
+        .labor-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .labor-item:last-child {
+            border-bottom: none;
+        }
+
+        #login-modal {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L100,100 M100,0 L0,100" stroke="white" stroke-width="1" opacity="0.2"/></svg>') repeat;
-            z-index: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
 
-        #hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 48px;
-            margin: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        #hero p {
-            font-size: 18px;
-            margin: 10px 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        #hero img {
-            width: 80px;
-            opacity: 0.3;
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1;
-        }
-
-        .cta-button {
-            background-color: #000000; /* Black */
-            color: #ffffff; /* White */
-            border: 2px solid #ff0000; /* Red border */
-            padding: 12px 24px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            min-width: 44px;
-            min-height: 44px;
-            transition: box-shadow 0.3s;
-        }
-
-        .cta-button:hover {
-            box-shadow: 0 0 10px #ff0000; /* Red glow */
-        }
-
-        #overview {
-            background-color: #ffffff;
-        }
-
-        #overview .left, #overview .right {
+        .modal-content {
+            background: white;
             padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        #overview .left img {
-            width: 100px;
-            height: 100px;
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff4d4d;
             border-radius: 50%;
-            border: 2px solid #ff0000; /* Red border */
-        }
-
-        .module-card {
-            background-color: #ffffff;
-            border: 1px solid #000000; /* Black border */
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: pop-in 0.5s ease-out;
-        }
-
-        .progress-bar {
-            background-color: #000000; /* Black track */
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-bar div {
-            background-color: #ff0000; /* Red fill */
-            height: 100%;
-        }
-
-        #video, #notes, #discussion, #assignments, #progress {
-            background-color: #ffffff;
-            border: 1px solid #000000;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        #video video {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        #notes a {
-            color: #ff0000;
-        }
-
-        #discussion input {
-            margin: 10px 0;
-        }
-
-        #progress img {
             width: 30px;
-            margin: 5px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
 
-        /* Animations */
-        @keyframes fade-in {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        @keyframes pop-in {
-            0% { transform: scale(0.95); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px;
             }
 
-            .menu-toggle {
-                display: block;
+            .card {
+                padding: 15px;
             }
 
-            nav {
-                display: none;
+            button, input[type="submit"], .btn {
                 width: 100%;
-                flex-direction: column;
-            }
-
-            nav.active {
-                display: flex;
-            }
-
-            nav a {
-                margin: 10px 0;
-                font-size: 16px;
-            }
-
-            #hero h1 {
-                font-size: 32px;
-            }
-
-            #hero p {
-                font-size: 16px;
-            }
-
-            #hero img {
-                width: 60px;
-            }
-
-            .cta-button {
-                padding: 10px 20px;
-                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">Course Platform</div>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <nav>
-            <a href="index.html">Back to Main Page</a>
-        </nav>
+        <h1>Hire Labour</h1>
     </header>
     <main>
-        <div id="content">
-            <section id="hero">
-                <h1>Welcome to Web Development 101</h1>
-                <p>Step into your digital classroom – Let’s learn together!</p>
-                <button class="cta-button">Start Lesson 1 →</button>
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='80' height='60' fill='none' stroke='black' stroke-width='2'/></svg>" alt="Chalkboard">
-            </section>
-            <section id="overview">
-                <div class="left">
-                    <h2>Instructor</h2>
-                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='gray'/></svg>" alt="Instructor">
-                    <p>Taught by Mr. John Banda, 10+ years of experience.</p>
-                </div>
-                <div class="right">
-                    <h2>Course Modules</h2>
-                    <div class="module-card">
-                        <h3>Module 1: HTML Basics</h3>
-                        <div class="progress-bar"><div style="width: 60%;"></div></div>
-                        <p>In Progress</p>
-                    </div>
-                    <div class="module-card">
-                        <h3>Module 2: CSS Styling</h3>
-                        <div class="progress-bar"><div style="width: 20%;"></div></div>
-                        <p>Not Started</p>
-                    </div>
-                    <div class="module-card">
-                        <h3>Module 3: JavaScript</h3>
-                        <div class="progress-bar"><div style="width: 100%;"></div></div>
-                        <p>Completed</p>
-                    </div>
-                </div>
-            </section>
-            <section id="video">
-                <h2>Video Lectures</h2>
-                <video controls style="width: 100%; max-width: 600px;">
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </section>
-            <section id="notes">
-                <h2>Lecture Notes</h2>
-                <p>Download or view the lecture notes for this course.</p>
-                <p><a href="data:application/pdf;base64,JVBERi0xLjAKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PgplbmRvYmoKMiAwIG9iago8PC9UeXBlL1BhZ2VzL0NvdW50IDEvS2lkcyBbMyAwIFJdPj4KZW5kb2JqCjMgMCBvYmoKPDwvVHlwZS9QYWdlL1BhcmVudCAyIDAgUi9SZXNvdXJjZXM8PC9Gb250PDwvRjEgNCAwIFI+Pi9Qcm9jU2V0Wy9QREYvVGV4dF0+Pi9NZWRpYUJveFsgMCAwIDYxMiA3OTJdL0NvbnRlbnRzIDUgMCBSPj4KZW5kb2JqCjQgMCBvYmoKPDwvVHlwZS9Gb250L0Jhc2VGb250L0hlbHZldGljYS9TdWJ0eXBlL1R5cGUxL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZz4+CmVuZG9iago1IDAgb2JqCjw8L0xlbmd0aCA0ND4+c3RyZWFtCkJUIDAgMCAxIDAgMCA3OTIgdG0gL0YxIDEyIFRmIChIZWxsbywgV29ybGQhKSBUagpFVAplbmRzdHJlYW0KZW5kb2JqCnRyYWlsZXIKPDwvUm9vdCAxIDAgUi9TaXplIDU+PgolJUVPRgo=" download="notes.pdf">Download Notes</a></p>
-            </section>
-            <section id="discussion">
-                <h2>Discussion</h2>
-                <p>Comment: Great lecture! (Mock comment)</p>
-                <input type="text" id="comment-input" placeholder="Add a comment..." disabled>
-                <button onclick="addComment()" disabled>Post</button>
-            </section>
-            <section id="assignments">
-                <h2>Assignments</h2>
-                <p>Assignment 1: Build a webpage</p>
-                <input type="file" id="assignment-upload" disabled>
-                <button onclick="submitAssignment()" disabled>Submit</button>
-            </section>
-            <section id="progress">
-                <h2>Progress</h2>
-                <p>Badges Earned:</p>
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><circle cx='15' cy='15' r='10' fill='gold'/></svg>" alt="Badge">
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><circle cx='15' cy='15' r='10' fill='silver'/></svg>" alt="Badge">
-            </section>
+        <div class="card">
+            <p id="message">Welcome! Click 'Hire Labour' to find workers or toggle login.</p>
+            <button onclick="toggleLogin()" aria-label="Toggle login status">Toggle Login (Simulate)</button>
+            <button onclick="showLaborForm()" aria-label="Hire labour">Hire Labour</button>
+        </div>
+        <div id="labor-form" class="card">
+            <h2>Select Labour</h2>
+            <form onsubmit="event.preventDefault(); findLabour();">
+                <label for="labor-type">Labour Type:</label>
+                <select id="labor-type" name="labor-type" required aria-label="Select labour type">
+                    <option value="" disabled selected>Select a type</option>
+                    <option value="plumber">Plumber</option>
+                    <option value="electrician">Electrician</option>
+                    <option value="carpenter">Carpenter</option>
+                </select>
+                <br>
+                <label for="location">Location:</label>
+                <select id="location" name="location" required aria-label="Select location">
+                    <option value="" disabled selected>Select a location</option>
+                    <option value="new-york">New York</option>
+                    <option value="london">London</option>
+                    <option value="tokyo">Tokyo</option>
+                </select>
+                <br>
+                <input type="submit" value="Find Labour" aria-label="Find labour">
+                <button type="button" class="btn" onclick="resetForm()" aria-label="Clear filters">Clear Filters</button>
+            </form>
+            <div class="loader" id="loader"></div>
+        </div>
+        <div id="labor-list" class="card">
+            <h2>Available Labour</h2>
+            <div id="labor-results"></div>
+            <button class="btn" onclick="backToForm()" aria-label="Back to form">Back to Form</button>
+        </div>
+        <div id="login-modal">
+            <div class="modal-content">
+                <h2>Login Required</h2>
+                <p>Please log in to hire labour.</p>
+                <button class="btn" onclick="closeModal()" aria-label="Close login prompt">Close</button>
+            </div>
         </div>
     </main>
     <script>
-        function toggleMenu() {
-            document.querySelector("nav").classList.toggle("active");
+        let isLoggedIn = false;
+
+        const laborData = [
+            { type: "plumber", location: "new-york", name: "John Doe - Plumber" },
+            { type: "plumber", location: "london", name: "Jane Smith - Plumber" },
+            { type: "electrician", location: "new-york", name: "Mike Brown - Electrician" },
+            { type: "electrician", location: "tokyo", name: "Sato Yamada - Electrician" },
+            { type: "carpenter", location: "london", name: "Emma Wilson - Carpenter" },
+            { type: "carpenter", location: "tokyo", name: "Hiro Tanaka - Carpenter" }
+        ];
+
+        function toggleLogin() {
+            isLoggedIn = !isLoggedIn;
+            const message = document.getElementById("message");
+            message.textContent = isLoggedIn 
+                ? "You are logged in! Click 'Hire Labour' to find workers." 
+                : "Welcome! Click 'Hire Labour' to find workers or toggle login.";
+            message.style.color = isLoggedIn ? "#ff4d4d" : "#333";
+            document.getElementById("labor-form").style.display = "none";
+            document.getElementById("labor-list").style.display = "none";
+            document.getElementById("login-modal").style.display = "none";
         }
 
-        function addComment() {
-            // Disabled for static use
+        function showLaborForm() {
+            const laborForm = document.getElementById("labor-form");
+            const laborList = document.getElementById("labor-list");
+            const loginModal = document.getElementById("login-modal");
+            if (isLoggedIn) {
+                laborForm.style.display = "block";
+                laborList.style.display = "none";
+                loginModal.style.display = "none";
+            } else {
+                laborForm.style.display = "none";
+                laborList.style.display = "none";
+                loginModal.style.display = "flex";
+            }
         }
 
-        function submitAssignment() {
-            // Disabled for static use
+        function closeModal() {
+            document.getElementById("login-modal").style.display = "none";
         }
 
-        // Initialize (no login simulation for static use)
+        function resetForm() {
+            document.getElementById("labor-type").value = "";
+            document.getElementById("location").value = "";
+            document.getElementById(" labor-form").style.display = "block";
+            document.getElementById("labor-list").style.display = "none";
+        }
+
+        function backToForm() {
+            document.getElementById("labor-form").style.display = "block";
+            document.getElementById("labor-list").style.display = "none";
+        }
+
+        async function findLabour() {
+            if (!isLoggedIn) return;
+
+            const laborType = document.getElementById("labor-type").value;
+            const location = document.getElementById("location").value;
+            const resultsDiv = document.getElementById("labor-results");
+            const laborList = document.getElementById("labor-list");
+            const loader = document.getElementById("loader");
+
+            if (!laborType || !location) {
+                alert("Please select both labour type and location.");
+                return;
+            }
+
+            loader.style.display = "block";
+            resultsDiv.innerHTML = "";
+            laborList.style.display = "none";
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            const filteredLabor = laborData.filter(labor => 
+                labor.type === laborType && labor.location === location
+            );
+
+            loader.style.display = "none";
+            resultsDiv.innerHTML = "";
+            if (filteredLabor.length > 0) {
+                filteredLabor.forEach(labor => {
+                    const div = document.createElement("div");
+                    div.className = "labor-item";
+                    div.textContent = labor.name;
+                    resultsDiv.appendChild(div);
+                });
+            } else {
+                const div = document.createElement("div");
+                div.className = "labor-item";
+                div.textContent = "No labour available for this selection.";
+                resultsDiv.appendChild(div);
+            }
+            laborList.style.display = "block";
+
+            console.log("Form submitted:", { laborType, location });
+        }
     </script>
 </body>
 </html>
